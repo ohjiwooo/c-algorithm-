@@ -24,5 +24,8 @@
     <ClCompile Include="insert.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="merge.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
