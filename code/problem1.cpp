@@ -10,9 +10,8 @@ string str;
 int fun_1(int n) {
 	int temp = 0;
 	int ans = 0;
-//	int i = 8;
 	int flag = 0;
-	for (int i = 1; i <= n; i++) {
+	for (int i = 1; i <= (n/2); i++) {
 		int start = 0;
 		while ((start + (2 * i) - 1) <= n) {
 			string cut = str.substr(start, i);
@@ -46,7 +45,6 @@ int fun_1(int n) {
 				ans = temp; temp = 0; }
 			temp = 0;
 		}
-//		cout <<"i:"<< i <<"ans:"<< ans <<"temp:"<<temp <<"\n";
 	}
 	return ans;
 }
