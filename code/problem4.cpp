@@ -36,3 +36,19 @@ vector<int> solution(vector<string> words, vector<string> queries) {
 
 	return answer;
 }
+
+
+else if ((r_flag == 0) && (l_flag == 0) && (numbers[i] - l == 1) && (r - numbers[i] != 1)) {
+answer.append("L"); l_flag == 1; l = numbers[i]; //둘다 자기자리에있고 완쪽이가까움
+			}
+else if ((r_flag == 0) && (l_flag == 0) && (numbers[i] - l != 1) && (r - numbers[i] == 1)) {
+answer.append("R"); r_flag == 1; r = numbers[i]; //둘다 자기자리에있고 오른쪽이가까움
+			}
+else if ((r_flag == 0) && (l_flag == 0) && (numbers[i] - l == 1) && (r - numbers[i] == 1)) {
+if (h == 0) { answer.append("R"); r_flag == 1; r = numbers[i]; } //둘다 자기자리,바로옆
+else { answer.append("L"); l_flag == 1; l = numbers[i]; } //오른손잡이,왼손잡이 구분        
+			}
+else if ((r_flag == 0) && (l_flag == 0) && (numbers[i] - l != 1) && (r - numbers[i] != 1)) {
+if (h == 0) { answer.append("R"); r_flag == 1; r = numbers[i]; } //둘다 자기자리,바로옆아님
+else { answer.append("L"); l_flag == 1; l = numbers[i]; } //오른손잡이,왼손잡이 구분        
+			}
