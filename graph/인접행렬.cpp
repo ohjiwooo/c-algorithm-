@@ -14,14 +14,7 @@ int a, b; //입력때 쓰임
 stack <int> s;
 bool visited[max_num];
 
-/*
-typedef struct qq {
-	int level;
-	int node;
-} qq;
 
-queue <qq> que;
-qq temp; */
 
 
 
