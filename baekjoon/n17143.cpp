@@ -17,8 +17,8 @@ s temp[102][102];
 
 
 
-void move(int a) {
-	for (int i = a; i < r; i++) {
+void move() {
+	for (int i = 0; i < r; i++) {
 		for (int j = 0; j < c; j++) {
 			if (map[i][j].d == 1) {//위
 				if (i - map[i][j].s > 0) {//범위안넘음
@@ -129,7 +129,19 @@ void move(int a) {
 
 }
 
+void update() {
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++) {
+			map[i][j].d = temp[i][j].d;
+			map[i][j].s = temp[i][j].s;
+			map[i][j].z = temp[i][j].z;
+			temp[i][j].d = 0;
+			temp[i][j].z = 0;
+			temp[i][j].s = 0;
+		}
+	}
 
+}
 
 int main() {
 
@@ -158,10 +170,13 @@ int main() {
 				map[i][j].d = 0;
 				map[i][j].z = 0;
 				answer++;
+				move();
+				update();
 				break;
 			}
 		}
 	}
+	cout << answer;
 
 
 	return 0;
