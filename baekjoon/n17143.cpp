@@ -8,96 +8,159 @@ typedef struct s{
 	int z; //크키
 }s;
 
-int r, c,m;
-s map[102][102];
+int r, c, m;
+s map[105][105];
 int answer = 0;
-s temp[102][102];
+s temp[105][105];
 
-void change(int a,int b,int c,int d) {
-	if (temp[a][b].z < map[c][d].z) { //이미있는 애가 없거나 더 작음
-		temp[a][b].s = map[c][d].s;
-		temp[a][b].d = map[c][d].d;
-		temp[a][b].z = map[c][d].z;
-	}
 
+
+void del(int i,int j) {
+	map[i][j].d = 0;
+	map[i][j].s = 0;
+	map[i][j].z = 0;
+}
+void del2(int i, int j) {
+	temp[i][j].d = 0;
+	temp[i][j].s = 0;
+	temp[i][j].z = 0;
 }
 
+void move2(int n,int i,int j) {
+	int m = 0;
+	if (map[i][j].d == 1 || map[i][j].d == 2) { m = i;}
+	else { m = j; }
+	if (n == 0) {
+		if (map[i][j].z > temp[i][j].z) {//방금온애가 더 큼
+			temp[i][j] = map[i][j];
+			del(i, j);
+		}
+		else { del(i, j); }
+	}
+	for (int k = 0; k < n; k++) {
+		if ((map[i][j].d == 1 && i!=1)||(map[i][j].d==2 &&i==r )) {
+			map[i][j].d = 1;
+			m -= 1;
+			if (m == 1) { map[i][j].d = 2; }
+			if (k == n - 1) {
+				if(map[i][j].z>temp[m][j].z) {//방금온애가 더 큼
+					temp[m][j] = map[i][j];
+					del(i, j);
+				}
+				else { del(i, j); }
+			}
+		} //위
+		else if ((map[i][j].d == 2 && i!=r)||(map[i][j].d==1 &i==1)) {
+			map[i][j].d = 2;
+			m += 1;
+			if (m == r ) { map[i][j].d = 1; }
+			if (k == n - 1) {
+				if (map[i][j].z > temp[m][j].z) {//누가있고 방금온애가 더 큼
+					temp[m][j] = map[i][j];
+					del(i, j);
+				}
+				else { del(i, j); }
+			}
+		}//아래
+		else if((map[i][j].d == 3 && j!=c)||(map[i][j].d==4&&j==1)) {
+			map[i][j].d = 3;
+			m += 1;
+			if (m == c ) { map[i][j].d = 4; }
+			if (k == n - 1) {
+				if (map[i][j].z > temp[i][m].z) {//누가있고 방금온애가 더 큼
+					temp[i][m] = map[i][j];
+					del(i, j);
+				}
+				else { del(i, j); }
+			}
+		}//오
+		else if ((map[i][j].d==4 && j!=1)||(map[i][j].d==3&&j==c)) {
+			map[i][j].d = 4;
+			m -= 1;
+			if (m == 1) { map[i][j].d = 3; }
+			if (k == n - 1) {
+				if ( map[i][j].z > temp[i][m].z ) {//누가있고 방금온애가 더 큼
+					temp[i][m] = map[i][j];
+					del(i, j);
+				}
+				else { del(i, j); }
+			}
+		}//왼
+	}
+}
 
 void move() {
-	for (int i = 1; i < r; i++) {
-		for (int j = 1; j < c; j++) {
-			if (map[i][j].d == 1) {//위
-				
-
-
-			}
-			else if (map[i][j].d == 2) {//아래
-				
-			}
-			else if (map[i][j].d == 3) {//오른쪽
-				
-		
-			}
-			else if (map[i][j].d == 4) {//왼쪽
-				
-				
+	for (int i = 1; i <= r; i++) {
+		for (int j = 1; j <= c; j++) {
+			if (map[i][j].z != 0) {
+				int n = 0;//속력정리
+				if (map[i][j].d == 1 || map[i][j].d == 2) {
+					n = map[i][j].s % (r*2-2);
+				}
+				else { n = map[i][j].s % (c*2-2); }
+				move2(n, i, j);
 			}
 		}
 	}
-
 }
 
 void update() {
-	for (int i = 0; i < r; i++) {
-		for (int j = 0; j < c; j++) {
-			map[i][j].d = temp[i][j].d;
-			map[i][j].s = temp[i][j].s;
-			map[i][j].z = temp[i][j].z;
-			temp[i][j].d = 0;
-			temp[i][j].z = 0;
-			temp[i][j].s = 0;
+	for (int i = 1; i <= r; i++) {
+		for (int j = 1; j <= c; j++) {
+			if (temp[i][j].z != 0) {
+				map[i][j] = temp[i][j];
+				del2(i, j);
+			}
 		}
 	}
+}
+
+void p() {
+	cout << "==========\n";
+	for (int i=1; i <= r; i++) {
+		for (int j = 1; j <= c; j++) {
+			cout<<map[i][j].z<<" ";
+		}
+		cout << "\n";
+	}
+	cout << "===========\n";
 
 }
 
 int main() {
-	int a, b, c, d, e;
-	cin >> r >> c >> m;
 	
-	for (int k = 0; k <r*m; k++) {
-		cin >> a;
-		cin >> b;
-		cin >> c;
-		cin >> d;
-		cin >> e;
-		for (int i = 1; i <= r; i++) {
-			for (int j = 1; j <= c; j++) {
-				if (i == a && j == b) {
-					map[i][j].d = c;
-					map[i][j].s=d;
-					map[i][j].z=e;
-				}
-				else { temp[i][j].z = 0; }
-			}
-		}
-	}
+	cin >> r >> c >> m;
+	int n1,n2,n3,n4,n5;
 
-	for (int i = 0; i < c; i++) {
-		for (int j = 0; j < r; j++) {
-			if (map[i][j].d != 0) {
+	
+
+	for (int k = 0; k <m; k++) {
+		cin >> n1;
+		cin >> n2;
+		cin >> n3;
+		cin >> n4;
+		cin >> n5;
+		map[n1][n2].s = n3;
+		map[n1][n2].d = n4;
+		map[n1][n2].z = n5;	
+	}
+ // 입력
+	
+	p();
+	for (int j = 1; j <= c; j++) {
+		for (int i = 1; i <= r; i++) {
+			if (map[i][j].z != 0) {
+				answer += map[i][j].z; //찾음 잡음
 				map[i][j].s = 0;
 				map[i][j].d = 0;
 				map[i][j].z = 0;
-				answer++;
-				move();
-				update();
 				break;
 			}
 		}
+		move(); //이동
+		update();
+		p();
 	}
 	cout << answer;
-
-
 	return 0;
 }
