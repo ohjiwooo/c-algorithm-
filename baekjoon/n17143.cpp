@@ -26,43 +26,45 @@ void del2(int i, int j) {
 	temp[i][j].z = 0;
 }
 
-void move2(int n,int i,int j) {
+int move2(int n,int i,int j) {
 	int m = 0;
-	if (map[i][j].d == 1 || map[i][j].d == 2) { m = i;}
-	else { m = j; }
+	if (map[i][j].d == 1 || map[i][j].d == 2) { m = i;} //위아래
+	else { m = j; } //오왼
 	if (n == 0) {
 		if (map[i][j].z > temp[i][j].z) {//방금온애가 더 큼
-			temp[i][j] = map[i][j];
-			del(i, j);
+			temp[i][j] = map[i][j]; //temp에 복사
+			del(i, j); //map삭제
+			return 0;
 		}
-		else { del(i, j); }
+		else { del(i, j); return 0; } //원래있던애가 더큼-map삭제
 	}
 	for (int k = 0; k < n; k++) {
-		if ((map[i][j].d == 1 && i!=1)||(map[i][j].d==2 &&i==r )) {
+		if ((map[i][j].d == 1 && m!=1)||(map[i][j].d==2 &&m==r )) {
 			map[i][j].d = 1;
 			m -= 1;
-			if (m == 1) { map[i][j].d = 2; }
-			if (k == n - 1) {
+			if (m == 1) { map[i][j].d = 2; } //벽에 닿아서 방향전환
+			if (k == n - 1) {//마지막 이동
 				if(map[i][j].z>temp[m][j].z) {//방금온애가 더 큼
 					temp[m][j] = map[i][j];
-					del(i, j);
+					del(i, j); //map삭제
+					return 0;
 				}
-				else { del(i, j); }
+				else { del(i, j); return 0; } //원래있던애가 더 큼
 			}
 		} //위
-		else if ((map[i][j].d == 2 && i!=r)||(map[i][j].d==1 &i==1)) {
+		else if ((map[i][j].d == 2 && m!=r)||(map[i][j].d==1 &m==1)) {
 			map[i][j].d = 2;
 			m += 1;
 			if (m == r ) { map[i][j].d = 1; }
 			if (k == n - 1) {
 				if (map[i][j].z > temp[m][j].z) {//누가있고 방금온애가 더 큼
 					temp[m][j] = map[i][j];
-					del(i, j);
+					del(i, j); return 0;
 				}
-				else { del(i, j); }
+				else { del(i, j); return 0; }
 			}
 		}//아래
-		else if((map[i][j].d == 3 && j!=c)||(map[i][j].d==4&&j==1)) {
+		else if((map[i][j].d == 3 && m!=c)||(map[i][j].d==4&&m==1)) {
 			map[i][j].d = 3;
 			m += 1;
 			if (m == c ) { map[i][j].d = 4; }
@@ -74,16 +76,16 @@ void move2(int n,int i,int j) {
 				else { del(i, j); }
 			}
 		}//오
-		else if ((map[i][j].d==4 && j!=1)||(map[i][j].d==3&&j==c)) {
+		else if ((map[i][j].d==4 && m!=1)||(map[i][j].d==3&&m==c)) {
 			map[i][j].d = 4;
 			m -= 1;
 			if (m == 1) { map[i][j].d = 3; }
 			if (k == n - 1) {
 				if ( map[i][j].z > temp[i][m].z ) {//누가있고 방금온애가 더 큼
 					temp[i][m] = map[i][j];
-					del(i, j);
+					del(i, j); return 0;
 				}
-				else { del(i, j); }
+				else { del(i, j); return 0; }
 			}
 		}//왼
 	}
@@ -93,11 +95,11 @@ void move() {
 	for (int i = 1; i <= r; i++) {
 		for (int j = 1; j <= c; j++) {
 			if (map[i][j].z != 0) {
-				int n = 0;//속력정리
+				int n;//속력정리
 				if (map[i][j].d == 1 || map[i][j].d == 2) {
-					n = map[i][j].s % (r*2-2);
+					n = (map[i][j].s % (r * 2 - 2)); 
 				}
-				else { n = map[i][j].s % (c*2-2); }
+				else { n = (map[i][j].s % (c*2-2)); }
 				move2(n, i, j);
 			}
 		}
@@ -115,17 +117,7 @@ void update() {
 	}
 }
 
-void p() {
-	cout << "==========\n";
-	for (int i=1; i <= r; i++) {
-		for (int j = 1; j <= c; j++) {
-			cout<<map[i][j].z<<" ";
-		}
-		cout << "\n";
-	}
-	cout << "===========\n";
 
-}
 
 int main() {
 	
@@ -146,7 +138,7 @@ int main() {
 	}
  // 입력
 	
-	p();
+
 	for (int j = 1; j <= c; j++) {
 		for (int i = 1; i <= r; i++) {
 			if (map[i][j].z != 0) {
@@ -159,7 +151,6 @@ int main() {
 		}
 		move(); //이동
 		update();
-		p();
 	}
 	cout << answer;
 	return 0;
