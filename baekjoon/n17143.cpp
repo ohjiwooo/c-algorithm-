@@ -1,5 +1,5 @@
 #include<iostream>
-
+#include<queue>
 using namespace std;
 
 typedef struct s{
@@ -12,7 +12,7 @@ int r, c, m;
 s map[105][105];
 int answer = 0;
 s temp[105][105];
-
+queue <int >q;
 
 
 void del(int i,int j) {
@@ -91,16 +91,19 @@ int move2(int n,int i,int j) {
 	}
 }
 
+
+	
+
 void move() {
 	for (int i = 1; i <= r; i++) {
 		for (int j = 1; j <= c; j++) {
 			if (map[i][j].z != 0) {
 				int n;//속력정리
 				if (map[i][j].d == 1 || map[i][j].d == 2) {
-					n = (map[i][j].s % (r * 2 - 2)); 
+					n = (map[i][j].s % ((r-1)*2)); 
 				}
-				else { n = (map[i][j].s % (c*2-2)); }
-				move2(n, i, j);
+				else { n = (map[i][j].s % ((c-1)*2)); }
+				move2(n,i, j);
 			}
 		}
 	}
