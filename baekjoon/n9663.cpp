@@ -18,9 +18,8 @@ bool pos(int row) {
 		if ( (q[j] == q[row]) || ( p(j-row) == p(q[j]-q[row]) )) {//못놓는 경우
 			return false;
 		}
-		else { return true; }
-	
 	}
+	return true;
 }
 
 int backtracking(int row) { //현재로우,입력받은 n
@@ -33,7 +32,7 @@ int backtracking(int row) { //현재로우,입력받은 n
 	for (int i = 1; i <= n; i++) {
 	
 		q[row] = i;
-		if (pos(i) == true) {
+		if (pos(row) == true) {
 			backtracking(row+1);
 		}
 	
