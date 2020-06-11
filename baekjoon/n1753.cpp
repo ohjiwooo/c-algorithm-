@@ -1,7 +1,7 @@
 #include<iostream>
 #include<queue>
 #include<vector>
-#define inf 987654321;
+
 
 using namespace std;
 
@@ -30,7 +30,7 @@ int main() {
 	}
 	
 	for (int i = 1; i <= v; i++) {
-		arr[i] = inf;
+		arr[i] = 987654321;
 		vis[i] = false;
 
 	} //초기화
@@ -39,11 +39,11 @@ int main() {
 	
 
 	
-	qq.push(make_pair(start,0));
+	qq.push(make_pair(0,start));
 
 	while (qq.empty() != true) {
-		node = qq.top().first;
-		w = qq.top().second;
+		w = qq.top().first;
+		node = qq.top().second;
 		qq.pop();
 		
 		if (vis[node]) {  //방문 안했으면 계속
@@ -58,7 +58,7 @@ int main() {
 
 				if (arr[node2] > w2 + w) {
 					arr[node2] = w2 + w;
-					qq.push(make_pair(node2,arr[node2]));
+					qq.push(make_pair(arr[node2],node2));
 				}
 			
 
