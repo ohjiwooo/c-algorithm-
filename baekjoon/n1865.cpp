@@ -3,53 +3,57 @@
 
 using namespace std;
 
+bool ans;
 int n, m, w,num;
 int a, b, c;
-vector <pair<int, int>> map[505];
 int arr[505];
-int n1,n2, w1, w2;
+
 
 int main() {
 	cin >> num;
+	
+	while ( num>0) {
 
-	while (num > 0) {
-		
 		cin >> n >> m >> w;
+		vector <pair<int, int>> map[505];
 
 		for (int i = 0; i < m; i++) {
 			cin >> a >> b >> c;
 			map[a].push_back(make_pair(b,c));
 			map[b].push_back(make_pair(a, c));
-		}
 
+		}
 		for (int i = 0; i < w; i++) {
 			cin >> a >> b >> c;
 			map[a].push_back(make_pair(b, -c));
-		}
 
-		for (int i = 1; i <= n;i++) {
+		}
+	
+		for (int i = 1; i <= n; i++) {
 			arr[i] = 987654321;
 		}
 
+		ans = false;
+
 		arr[1] = 0;
+		for (int i = 1; i <= n;i++){ //n번순환
+			for (int j = 1; j <= n; j++) { //현재노드
+				for (int k = 0; k < map[j].size();k++) { //인접노드 탐색
+					int node = map[j][k].first;
+					int w = map[j][k].second;
 
-		for (int i = 1; i <= n;i++) {
-			n1 = i;
-			w1 = arr[i];
-
-			for (int j = 0; j < map[i].size(); j++) {
-				n2 = map[i][j].first;
-				w2 = map[i][j].second;
-
-				if (arr[n2] > w1 + w2) {
-					arr[n2] = w1 + w2;
+					if (arr[node] > w + arr[j]) {
+						arr[node] = w + arr[j];
+						if (i == n) { ans = true; }
+					}
 				}
 			}
 		}
-
-
-
-
+		if (ans == true) { cout << "YES\n"; }
+		else { cout << "NO\n"; }
 		num--;
 	}
+
+	
+	return 0;
 }
