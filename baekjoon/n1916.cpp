@@ -24,12 +24,12 @@ int main() {
 
 	cin >> s >> d;
 
-	for (int i = 0; i <= n;i++) {
+	for (int i = 1; i <= n;i++) {
 		vis[i] = false;
 		arr[i] = 987654321;
 	}
 
-
+	
 	arr[s] = 0;
 	pq.push(make_pair(0,s));
 
@@ -50,7 +50,7 @@ int main() {
 
 			if (arr[n2] > w1+w2) {
 				arr[n2] = w2 + w1;
-				pq.push(make_pair(w1+w1,n2));
+				pq.push(make_pair(arr[n2],n2));
 			}
 		}
 	}
