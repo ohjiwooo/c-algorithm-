@@ -1,5 +1,6 @@
 #include<iostream>
 #include <algorithm> 
+#include<vector>
 using namespace std;
 
 int n, m, k;
@@ -7,7 +8,6 @@ int arr[55][55]; //배열
 int turn[10][3]; //돌리는 값input
 int temp[55][55]; //배열담기
 int turn2[1000][10]; //순열담기
-int a[10]; //순열만들기
 int temp_num;
 
 void t(int a,int b,int c) { 
@@ -49,6 +49,8 @@ void t(int a,int b,int c) {
 		}
 		temp[l1][l2+1] = temp_num;
 
+		
+
 		l1++;
 		l2++;
 		r1--;
@@ -77,11 +79,11 @@ int fac(int a) {
 	return ans;
 }
 int answer() {
-	int ans = 100000;
+	int ans = 987654321;
 	int sum = 0;
 
-	for (int i = 1; i < n; i++) {
-		for (int j = 1; j < m;j++) {
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m;j++) {
 			sum += temp[i][j];
 		}
 		if (ans > sum) { ans = sum; }
@@ -92,7 +94,7 @@ int answer() {
 int main() {
 
 	cin >> n >> m >> k;
-	
+	vector<int> a(k);
 	for (int i = 1; i <= n;i++) {
 		for (int j = 1; j <= m;j++) {
 			cin >> arr[i][j];
@@ -107,7 +109,7 @@ int main() {
 		}
 	} //회전입력
 
-	int ans = 100000;
+	int ans = 987654321;
 	int sum;
 	
 	for (int i = 0; i < k;i++) {
@@ -123,9 +125,8 @@ int main() {
 
 		j++;
 
-	} while (next_permutation(a,a+k));
-
-//	t(turn[0][0],turn[0][1],turn[0][2]);
+	} while (next_permutation(a.begin(),a.end()));
+	
 
 
 
