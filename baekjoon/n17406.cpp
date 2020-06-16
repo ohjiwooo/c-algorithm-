@@ -18,7 +18,7 @@ void t(int a,int b,int c) {
 
 	int i;
 	while (l1 != r1) {
-		temp_num = temp[l1][l2-+1];
+		temp_num = temp[l1][l2];
 		
 		i = 0;
 		while (l1 +i < r1) {//왼쪽세로줄 이동
@@ -26,21 +26,15 @@ void t(int a,int b,int c) {
 			i++;
 		}
 
+	
 
 		i = 0;
 		while (l2 + i < r2) { //아랫줄 이동
-			temp[r1][l2 + i] = temp[r1][l1 + i + 1];
+			temp[r1][l2 + i] = temp[r1][l2 + i + 1];
 			i++;
 		}
 
-/*		cout << "===============================\n";
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= m; j++) {
-				cout << temp[i][j] << " ";
-
-			}
-			cout << "\n";
-		}*/
+		
 
 		i = 0;
 		while (r1-i > l1) { //오른쪽세로줄 이동
@@ -49,18 +43,30 @@ void t(int a,int b,int c) {
 		}
 
 		i = 0;
-		while (r2 -i > l1) { //맨윗줄이동
+		while (r2 -i > l2) { //맨윗줄이동
 			temp[l1][r2-i] = temp[l1][r2-i-1];
 			i++;
 		}
-	//	temp[l1][l2] = temp_num;
+		temp[l1][l2+1] = temp_num;
 
 		l1++;
 		l2++;
 		r1--;
 		r2--;
 	}
+	
 }
+void init() {
+	
+	for (int i = 1; i <= n;i++) {
+		for (int j = 1; j <= m;j++) {
+			temp[i][j] = arr[i][j];
+		}
+	}
+
+
+}
+
 
 int fac(int a) {
 	int ans=1;
@@ -119,34 +125,27 @@ int main() {
 
 	} while (next_permutation(a,a+k));
 
-	t(turn[0][0],turn[0][1],turn[0][2]);
-/*	cout << "===============================\n";
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= m; j++) {
-			cout << temp[i][j] << " ";
-
-		}
-		cout << "\n";
-	}*/
+//	t(turn[0][0],turn[0][1],turn[0][2]);
 
 
-/*	for (int i = 0; i < fac(k);i++) { //순열이 fac(k)개
+
+	for (int i = 0; i < fac(k);i++) { //순열이 fac(k)개
 		
 		for (int j = 0; j < k;j++) { //순열적용
 			
 			int a1 = turn2[i][j];
 			t(turn[a1][0], turn[a1][1], turn[a1][2]);
 			
-			
 
-			sum = answer();
-			if (ans > sum) {
-				ans = sum;
-
-			}
 		}
+		sum = answer();
+		if (ans > sum) {
+			ans = sum;
+		}
+		init();
+
 	}
 	
-	cout << ans;*/
+	cout << ans;
 	return 0;
 }
