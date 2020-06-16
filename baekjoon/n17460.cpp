@@ -3,11 +3,12 @@
 using namespace std;
 
 int n, m, k;
-int arr[505][505];
-int turn[10][3];
-int temp[505][505];
-int turn2[1000][10];
-int a[10];
+int arr[55][55]; //배열
+int turn[10][3]; //돌리는 값input
+int temp[55][55]; //배열담기
+int turn2[1000][10]; //순열담기
+int a[10]; //순열만들기
+int temp_num;
 
 void t(int a,int b,int c) { 
 	int l1 = a - c;
@@ -17,29 +18,42 @@ void t(int a,int b,int c) {
 
 	int i;
 	while (l1 != r1) {
-		i = 1;
-		while (l2 + i <= r2) { //맨윗줄이동
-			temp[l1][l2 + i] = arr[l1][l2 + i - 1];
+		temp_num = temp[l1][l2-+1];
+		
+		i = 0;
+		while (l1 +i < r1) {//왼쪽세로줄 이동
+			temp[l1+i][l2] = temp[l1+i+1][l2];
 			i++;
 		}
 
-		i = 1;
-		while (l1 + i <= r1) { //오른쪽세로줄 이동
-			temp[l1 + i][r2] = arr[l1 + i - 1][r2];
+
+		i = 0;
+		while (l2 + i < r2) { //아랫줄 이동
+			temp[r1][l2 + i] = temp[r1][l1 + i + 1];
 			i++;
 		}
 
-		i = 1;
-		while (r2 - i >= l2) { //아랫줄 이동
-			temp[r1][r2 - i] = arr[r1][r2 - i + 1];
+/*		cout << "===============================\n";
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				cout << temp[i][j] << " ";
+
+			}
+			cout << "\n";
+		}*/
+
+		i = 0;
+		while (r1-i > l1) { //오른쪽세로줄 이동
+			temp[r1-i][r2] = temp[r1-i-1][r2];
 			i++;
 		}
 
-		i = 1;
-		while (r1 - i >= l1) {//왼쪽세로줄 이동
-			temp[r1 - i][l2] = arr[r1 - i + 1][l2];
+		i = 0;
+		while (r2 -i > l1) { //맨윗줄이동
+			temp[l1][r2-i] = temp[l1][r2-i-1];
 			i++;
 		}
+	//	temp[l1][l2] = temp_num;
 
 		l1++;
 		l2++;
@@ -105,18 +119,34 @@ int main() {
 
 	} while (next_permutation(a,a+k));
 
+	t(turn[0][0],turn[0][1],turn[0][2]);
+/*	cout << "===============================\n";
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+			cout << temp[i][j] << " ";
 
-
-	for (int i = 0; i < fac(k);i++) {
-	
-		t(turn[i][0], turn[i][1], turn[i][2]);
-		sum = answer();
-		if (ans>sum) {
-			ans = sum;
 		}
-	
+		cout << "\n";
+	}*/
+
+
+/*	for (int i = 0; i < fac(k);i++) { //순열이 fac(k)개
+		
+		for (int j = 0; j < k;j++) { //순열적용
+			
+			int a1 = turn2[i][j];
+			t(turn[a1][0], turn[a1][1], turn[a1][2]);
+			
+			
+
+			sum = answer();
+			if (ans > sum) {
+				ans = sum;
+
+			}
+		}
 	}
 	
-	cout << ans;
+	cout << ans;*/
 	return 0;
 }
