@@ -1,12 +1,13 @@
 #include<iostream>
-
+#include <algorithm> 
 using namespace std;
 
 int n, m, k;
 int arr[505][505];
 int turn[10][3];
 int temp[505][505];
-int tutn2[1000][3];
+int turn2[1000][10];
+int a[10];
 
 void t(int a,int b,int c) { 
 	int l1 = a - c;
@@ -47,6 +48,14 @@ void t(int a,int b,int c) {
 	}
 }
 
+int fac(int a) {
+	int ans=1;
+	while (a >= 1) {
+		ans *= a;
+		a--;
+	}
+	return ans;
+}
 int answer() {
 	int ans = 100000;
 	int sum = 0;
@@ -80,8 +89,25 @@ int main() {
 
 	int ans = 100000;
 	int sum;
-
+	
 	for (int i = 0; i < k;i++) {
+		a[i] = i;
+	} //순열구하기 위한 배열
+
+	int j = 0;
+	do {
+
+		for (int i = 0; i < k; i++) {
+			turn2[j][i] = a[i];
+		}
+
+		j++;
+
+	} while (next_permutation(a,a+k));
+
+
+
+	for (int i = 0; i < fac(k);i++) {
 	
 		t(turn[i][0], turn[i][1], turn[i][2]);
 		sum = answer();
@@ -91,11 +117,6 @@ int main() {
 	
 	}
 	
-
-	
-
-
-
-
+	cout << ans;
 	return 0;
 }
