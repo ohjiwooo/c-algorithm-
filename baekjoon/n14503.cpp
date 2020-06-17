@@ -9,6 +9,7 @@ bool vis[55][55];
 int ans = 0;
 int flag = 0;
 
+
 void left_0() {//d==0
 	if (map[r][c-1] == 0 && vis[r][c-1] !=true) { // 청소할 공간있음
 		d = 3;
@@ -43,7 +44,7 @@ void left_2() {//d==2
 		flag = 0;
 		ans++;
 	}
-	else if (map[r - 1][c] == 1 || vis[r - 1][c] == true) { //청소할 공간없음
+	else if (map[r][c+1] == 1 || vis[r][c+1] == true) { //청소할 공간없음
 		d = 1;
 		flag++;
 	}
@@ -73,6 +74,7 @@ int main() {
 			vis[i][j] = false;
 		}
 	}
+	
 
 	vis[r][c] = true; ans++;
 
@@ -82,22 +84,23 @@ int main() {
 				break;
 			}
 			else if (d == 0 && map[r+1][c] ==0) { //북쪽이고 뒤에갈길있음
-				r += 1; flag = 0;
+				r += 1; flag = 0; 
 			}
 			else if (d==1 && map[r][c-1]==0) {//동쪽이고 있음
-				c -= 1; flag = 0;
+				c -= 1; flag = 0; 
 			}
 			else if (d == 2 && map[r-1][c] == 0) {//남쪽이고 있음
-				r -= 1; flag = 0;
+				r -= 1; flag = 0; 
 			}
 			else if (d == 3 && map[r][c + 1] == 0) {//서쪽이고 있음
-				c += 1; flag = 0;
+				c += 1; flag = 0; 
 			}
 		}
 		else if (d == 0) { left_0(); }
 		else if (d == 1) { left_1(); }
 		else if (d == 2) { left_2(); }
 		else if (d == 3) { left_3(); }
+		
 
 	}
 
