@@ -9,7 +9,7 @@ string a;;
 int s = 0;//시작시 0, 중반엔 1
 int main() {
 	
-	while (1) {
+	
 		getline(cin, a);
 
 		if (a.size() == 0) { //엔터만 입력
@@ -37,7 +37,7 @@ int main() {
 
 		cout << ans;
 
-	}
+	
 
 	return 0;
 }
