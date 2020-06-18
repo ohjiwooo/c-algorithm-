@@ -71,7 +71,12 @@ int main() {
 		if (flag == 0) { ans++; }
 		flag = 0;
 	}
-	cout << ans << "행\n";
+	for (int i = 0; i < n;i++) {
+		for (int j = 0; j < n;j++) {
+			loc[i][j] = false;
+		}
+	}
+
 	for (int i = 0; i < n; i++) { //열
 		for (int j = 0; j+1 < n; j++) {
 			if (pos(map[j][i] - map[j+1][i]) == 1) { //차이가 한칸
