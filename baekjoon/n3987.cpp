@@ -8,7 +8,8 @@ int pr, pc;
 int ans = 0;
 char answer;
 int answ = 0;
-char aa;
+
+
 
 void u(int i, int j);
 void d(int i, int j);
@@ -28,14 +29,11 @@ void u(int i, int j) {
 		}
 		else if (map[i][j] == 92) {
 			ans++;
-			if (aa == 'l') {cout}
-			aa = 'u';
 			l(i, j);
 			return;
 		}
 		else if (map[i][j] == '/') {
 			ans++;
-			aa = 'u';
 			r(i, j);
 			return;
 		}
@@ -56,13 +54,11 @@ void r(int i, int j) {
 		}
 		else if (map[i][j] == 92) {
 			ans++;
-			aa = 'r';
 			d(i, j);
 			return;
 		}
 		else if (map[i][j] == '/') {
 			ans++;
-			aa = 'r';
 			u(i, j);
 			return;
 		}
@@ -85,13 +81,11 @@ void d(int i, int j) {
 		}
 		else if (map[i][j] == 92) {
 			ans++;
-			aa = 'd';
 			r(i, j);
 			return;
 		}
 		else if (map[i][j] == '/') {
 			ans++;
-			aa = 'd';
 			l(i, j);
 			return;
 		}
@@ -113,13 +107,11 @@ void l(int i, int j) {
 		}
 		else if (map[i][j] == 92) {
 			ans++;
-			aa = 'l';
 			u(i, j);
 			return;
 		}
 		else if (map[i][j] == '/') {
 			ans++;
-			aa = 'l';
 			d(i, j);
 			return;
 		}
@@ -141,16 +133,18 @@ int main() {
 	cin >> pr >> pc;
 
 	u(pr, pc);
+	
 	if (ans > answ) {
 		answ = ans;
 		answer = 'U';
 	}
 	ans = 0;
 
-	l(pr, pc);
+
+	r(pr, pc);
 	if (ans > answ) {
 		answ = ans;
-		answer = 'L';
+		answer = 'R';
 	}
 	ans = 0;
 
@@ -162,6 +156,7 @@ int main() {
 	ans = 0;
 
 	l(pr, pc);
+
 	if (ans > answ) {
 		answ = ans;
 		answer = 'L';
