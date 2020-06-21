@@ -1,7 +1,6 @@
 #include<iostream>
 #include<algorithm>
-#include<queue>
-#include<vector>
+
 
 using namespace std;
 
@@ -18,7 +17,6 @@ int ans = 0;
 int n, m;// 컴퓨터수 , 연결수
 s in[100005];
 int p[1005];
-queue <pair<int, int>> qq;
 bool compare(s a,s b) {
 
 	return a.w < b.w;
