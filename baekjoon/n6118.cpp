@@ -15,6 +15,7 @@ int node, w;
 int ans1, ans2;
 int ans3=0;
 int arr2[50005];
+
 bool compare(int a, int b) {
 	return a > b;
 }
