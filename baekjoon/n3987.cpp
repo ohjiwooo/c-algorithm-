@@ -27,6 +27,20 @@ void d(int i, int j);
 void r(int i, int j);
 void l(int i, int j);
 
+void init_vis() {
+
+	for (int i = 1; i <= n;i++) {
+		for (int j = 1; j <= m;j++) {
+			vis[i][j].d = false;
+			vis[i][j].u = false;
+			vis[i][j].r = false;
+			vis[i][j].l = false;
+		}
+	}
+
+}
+
+
 void u(int i, int j) {
 	
 	while (i>0) {
@@ -236,6 +250,7 @@ int main() {
 			answer = 'U';
 		}
 		ans = 0;
+		init_vis();
 		
 
 		r(pr, pc);
@@ -246,7 +261,8 @@ int main() {
 			answer = 'R';
 		}
 		ans = 0;
-		
+		init_vis();
+
 		d(pr, pc);
 		if (flag == 1) { return 0; }
 
@@ -255,10 +271,11 @@ int main() {
 			answer = 'D';
 		}
 		ans = 0;
-	
+		init_vis();
 
 		l(pr, pc);
 		if (flag == 1) { return 0; }
+
 
 		if (ans > answ) {
 			answ = ans;
