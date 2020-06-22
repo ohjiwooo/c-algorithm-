@@ -26,13 +26,13 @@ int main() {
 	vector<int> ind(n);
 	vector <int>temp1(n);
 	vector <int>temp2(n);
-	
+
+
 	for (int i = 0; i < n;i++) {
 		for (int j = 0; j < n;j++) {
 			cin >> arr[i][j];
 		}
 	}
-
 
 
 	for (int i = 0; i < n;i++) {
@@ -48,6 +48,7 @@ int main() {
 	}
 
 	sort(ind.begin(),ind.end());
+	
 
 	do {
 		temp_ans1 = 0;
@@ -61,12 +62,12 @@ int main() {
 			else { temp2.push_back(v[i]); }
 		}
 
-		for (int i = 0; i < n;i++) {
 
-		}
 
 		if (m(temp_ans1,temp_ans2) < ans) { 
 			ans = m(temp_ans1,temp_ans2); }
+
+
 
 	} while (next_permutation(ind.begin(), ind.end()));
 
