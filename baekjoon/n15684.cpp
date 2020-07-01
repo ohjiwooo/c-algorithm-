@@ -1,11 +1,11 @@
 #include<iostream>
-#include<vector>
 using namespace std;
 
 int n, m, h;
-vector< vector<int> >map(35,vector<int>(15,0));
+int map[35][15] = {0,};
 
-bool s(vector <vector<int>>temp) {
+
+bool s(int temp[35][15]) {
 	
 	int ni,nj;
 	for (int i = 1; i <= n; i++) {
@@ -27,36 +27,29 @@ bool s(vector <vector<int>>temp) {
 	}
 	return true;
 }
-bool s2(int ni,int nj,int f,int k,vector <vector<int>> temp) {
-	
-	temp[ni][nj] = 1;
-	if (f==k) {
-		if (s(temp) == true) { cout << k; return true; }
-		else { return false; }
-	}
-	else if (f<k) {
-		for (int i = ni; i <= h; i++) {
-			for (int j = 1; j < n; j++) {
-				if (temp[i][j] == 0 && temp[i][j - 1] != 1 && temp[i][j + 1] != 1) {
-					if (s2(i, j, f + 1, k, temp) == true) { return true; }
-				}
-			}
+
+bool ff(int temp[35][15],int ni,int nj,int k,int f) {
+
+	if (f == k) {
+		if (s(temp) == true) {
+			cout << k; return true;
+		}
+		else {
+			return false;
 		}
 	}
-	return false;
-}
-
-bool ff(vector<vector<int>> temp, int k) {
-
-	for (int i = 1; i <= h; i++) {
+	for (int i = ni; i <= h; i++) {
 		for (int j = 1; j < n; j++) {
 			if (temp[i][j] == 0 && temp[i][j - 1] != 1 && temp[i][j + 1] != 1) {
-				if (s2(i, j, 1, k, temp)==true) { return true; }
+				temp[i][j] = 1;
+				if (ff(temp, i, j, k, f + 1) == true) { return true; }
+				temp[i][j] = 0;
 			}
 		}
 	}
 	return false;
 }
+
 int main(){
 	int f = 0;
 	cin >> n >> m >> h;
@@ -70,11 +63,10 @@ int main(){
 	if (s(map)==true) {
 		cout << 0; return 0;
 	}
-
-
-	if (ff(map, 1) == true) {return 0;}
-	if (ff(map, 2)==true) { return 0; }
-	if (ff(map, 3) == true){return 0; }
+	
+	if (ff(map, 1,1,1,0) == true) {return 0;}
+	if (ff(map, 1,1,2,0)==true) { return 0; }
+	if (ff(map, 1,1,3,0) == true){return 0; }
 	else { cout << -1; }
 	return 0;
 }
