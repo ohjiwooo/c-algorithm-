@@ -53,7 +53,11 @@ int main() {
 		}
 	}
 	
-
+	do {}while(
+		
+		
+		
+	):
 	
 
 
