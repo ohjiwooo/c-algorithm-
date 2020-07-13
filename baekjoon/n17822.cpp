@@ -51,13 +51,6 @@ void turn(int x,int d,int num) {// x배수원을 d방향으로 n번
 		}
 		k2++;
 		k = x;
-
-		cout << "===============================\n";
-		for (int i = 1; i <= n; i++) {
-			for (int j = 0; j < m; j++) {
-				cout << arr[i][j] << " ";
-			}cout << "\n";
-		}
 	}
 
 	
@@ -87,7 +80,7 @@ bool ff() {
 						f = 1;
 					}
 					else if (nj + jmap[i2] < 0 && arr[ni][nj] == arr[ni+imap[i2]][m-1] && vis[ni + imap[i2]][m - 1]!=true) {
-						qq.push(make_pair(ni+imap[i2],m-2));
+						qq.push(make_pair(ni+imap[i2],m-1));
 						vis[ni + imap[i2]][m - 1] = true;
 						ans = true;
 						f = 1;
@@ -169,14 +162,6 @@ int main() {
 			ff2();
 			if (flag == 1) { cout << 0; return 0; }
 		}
-		cout << "===============================\n";
-		for (int i = 1; i <= n; i++) {
-			for (int j = 0; j < m; j++) {
-				cout << arr[i][j] << " ";
-			}cout << "\n";
-		}
-		
-
 	}
 	cout << answer();
 	return 0;
