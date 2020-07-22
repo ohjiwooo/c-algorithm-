@@ -24,7 +24,7 @@ s temp[25][25];
 ss sh[500];
 int imap[5] = {0,-1,1,0,0};
 int jmap[5] = {0,0,0,-1,1};
-int ans = 0;
+int ans = 1;
 
 bool check() {
 	int a = 0;
@@ -37,29 +37,44 @@ bool check() {
 	return false;
 }
 
+void init_temp() {
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			temp[i][j] = map[i][j];
+		}
+	}
+
+}
+void init_map() {
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			map[i][j] = temp[i][j];
+		}
+	}
+
+}
 void remove() {
 
 	for (int i = 0; i < n;i++) {
 		for (int j = 0; j < n;j++) {
 			if (map[i][j].small_time >0 && map[i][j].vis != 1) {
 				map[i][j].small_time--;
+				if (map[i][j].small_time==0) {
+					map[i][j].small_num = 0;
+				}
 			}
 			if (map[i][j].vis == 1) {
 				map[i][j].vis = 0;
 			}
 		}
 	}
-	cout << "=============================\n";
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << map[i][j].small_num << " " << map[i][j].small_time << "|||";
-		}cout << "\n";
-	}
-
 }
 
 void move_shark() {
 
+	init_temp();
 	int f = 0;
 
 	for (int i = 1; i <= m; i++) {
@@ -72,42 +87,64 @@ void move_shark() {
 			f = 0;
 
 			for (int j = 1; j < 5; j++) {
-				if ((map[i + imap[sh[i].p[d][j]]][j + jmap[sh[i].p[d][j]]].small_time == 0 && map[i + imap[sh[i].p[d][j]]][j + jmap[sh[i].p[d][j]]].vis == 0) ||
-					(map[i + imap[sh[i].p[d][j]]][j + jmap[sh[i].p[d][j]]].small_time == 0 && map[i + imap[sh[i].p[d][j]]][j + jmap[sh[i].p[d][j]]].vis == 1 &&
-						map[i + imap[sh[i].p[d][j]]][j + jmap[sh[i].p[d][j]]].small_num < i)) {
+				if (ni + imap[sh[i].p[d][j]]>=0 && ni + imap[sh[i].p[d][j]]<n && nj + jmap[sh[i].p[d][j]]>=0 && nj + jmap[sh[i].p[d][j]]<n) {
+					if (map[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_time == 0 & temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].vis == 0) {//empty
 
-					map[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_time = k;
-					map[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num = i;
-					map[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].vis = 1;
-					sh[map[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num].now_d = 0;
+						temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_time = k;
+						temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num = i;
+						temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].vis = 1;
 
-					map[ni][nj].vis = 0;
-					sh[i].i = ni + imap[sh[i].p[d][j]];
-					sh[i].j = nj + jmap[sh[i].p[d][j]];
-					sh[i].now_d = sh[i].p[d][j];
-					f = 1;
-					break;
+						temp[ni][nj].vis = 0;
+						sh[i].i = ni + imap[sh[i].p[d][j]];
+						sh[i].j = nj + jmap[sh[i].p[d][j]];
+						sh[i].now_d = sh[i].p[d][j];
+						f = 1;
+						break;
+					}
+					else if (map[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_time == 0 && temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].vis == 1
+						&& temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num > i) {//change
+
+						sh[temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num].now_d = 0;
+						temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_time = k;
+						temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num = i;
+						temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].vis = 1;
+
+						temp[ni][nj].vis = 0;
+						sh[i].i = ni + imap[sh[i].p[d][j]];
+						sh[i].j = nj + jmap[sh[i].p[d][j]];
+						sh[i].now_d = sh[i].p[d][j];
+						
+						f = 1;
+						break;
+					}
+					else if (map[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_time == 0 && temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].vis == 1
+						&& temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num < i) {
+						sh[i].now_d = 0;
+						temp[ni][nj].vis = 0;
+						f = 1;
+						break;
+					}
 				}
 			}
 			if (f == 0) {
 				for (int j = 1; j < 5; j++) {
-					if (map[i + sh[i].p[d][j]][j + sh[i].p[d][j]].small_num == i) {
-						map[i + sh[i].p[d][j]][j + sh[i].p[d][j]].small_time = k;
-						map[i + sh[i].p[d][j]][j + sh[i].p[d][j]].small_num = i;
-						map[i + sh[i].p[d][j]][j + sh[i].p[d][j]].vis = 1;
-						map[ni][nj].vis = 0;
-						break;
+					if (ni + imap[sh[i].p[d][j]] >= 0 && ni + imap[sh[i].p[d][j]] < n && nj + jmap[sh[i].p[d][j]] >= 0 && nj + jmap[sh[i].p[d][j]] < n) {
+						if (temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num == i) {
+							temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_time = k;
+							temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].small_num = i;
+							temp[ni + imap[sh[i].p[d][j]]][nj + jmap[sh[i].p[d][j]]].vis = 1;
+							sh[i].i = ni + imap[sh[i].p[d][j]];
+							sh[i].j = nj + jmap[sh[i].p[d][j]];
+							sh[i].now_d = sh[i].p[d][j];
+							temp[ni][nj].vis = 0;
+							break;
+						}
 					}
 				}
 			}
 		}
 	}
-	cout << "=============================\n";
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << map[i][j].small_num << " " << map[i][j].small_time << "|||";
-		}cout << "\n";
-	}
+	init_map();
 }
 
 int main() {
@@ -137,19 +174,11 @@ int main() {
 			}
 		}
 	}
-	cout << "=============================\n";
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << map[i][j].small_num << " " << map[i][j].small_time << "|||";
-		}cout << "\n";
-	}
-
 	while (ans<1001) {
-		ans++;
 		move_shark();
 		remove();
 		if (check() == true) { cout << ans; return 0; }
-	
+		ans++;
 	}
 	cout << -1;
 	return 0;
