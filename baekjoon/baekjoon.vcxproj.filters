@@ -72,9 +72,6 @@
     <ClCompile Include="n1152.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="n5373-안함.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="n11559.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -166,6 +163,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="n15686.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n17140.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n16235.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n5373.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
