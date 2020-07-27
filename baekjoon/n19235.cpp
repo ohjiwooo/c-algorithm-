@@ -81,23 +81,25 @@ void blue(int num,int a) {
 		for (int i = 0; i < 4;i++) {
 			map[i][j] = map[i][j - num];
 		}
-	}
+	}//없어진 칸만큼 땡김
 	
-	for (int j = 8; j > 3; j--) {
+	for (int j = 8; j > 3; j--) {//더 땡길수 있는만큼 땡김
 		for (int i = 0; i < 4; i++) {
-			if (map[i][j] !=0 && map[i][j-1]==0) {
-				if (i-1>3 && map[i-1][j]==map[i][j]) {//위
-					while (map[i+1][j] !=0 && i+1<10) {
+			if (map[i][j] !=0 && map[i][j+1]==0) {//현재 블록의 아래가 비어있음,현재블록map[i][j]
+				if (map[i-1][j]==map[i][j]) {//현재 블록의 위와 현재블록이 세트,위블록
+					while (map[i+1][j] ==0 && i+1<10) {//!= 에서 ==으로 변경
 						map[i + 1][j] = map[i][j];
 						map[i - 1][j] = 0;
 					}
 				}
-				else if (j+1<4 && map[i][j]==map[i][j+1]) {//오
+			/*	else if (i+1<4 && map[i][j]==map[i+1][j] && map[i+1][j-1]==0) {//현재 블록의 오른쪽과 현재블록이 세트, 오른쪽 블록의 아래가 비어있음
+					while (map[i][j] == 0 && map[i+1][j-1]==0 && ) {
 					
+					}
 				}
 				else if (j-1>=0 && map[i][j-1]== map[i][j]) {//왼
 				
-				}
+				}*/
 			}
 		}
 	}
