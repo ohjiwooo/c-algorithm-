@@ -15,10 +15,8 @@ int n;
 int bn = 0;
 queue <s> qq;
 int answer = 0;
-
-//t = 1: 크기가 1×1인 블록을(x, y)에 놓은 경우
-//t = 2 : 크기가 1×2인 블록을(x, y), (x, y + 1)에 놓은 경우
-//t = 3 : 크기가 2×1인 블록을(x, y), (x + 1, y)에 놓은 경우
+void s_blue();
+void s_green();
 
 void new_block(int t,int x,int y) {
 
@@ -82,24 +80,34 @@ void blue(int num,int a) {
 			map[i][j] = map[i][j - num];
 		}
 	}//없어진 칸만큼 땡김
-	
+	int k;
 	for (int j = 8; j > 3; j--) {//더 땡길수 있는만큼 땡김
 		for (int i = 0; i < 4; i++) {
-			if (map[i][j] !=0 && map[i][j+1]==0) {//현재 블록의 아래가 비어있음,현재블록map[i][j]
-				if (map[i-1][j]==map[i][j]) {//현재 블록의 위와 현재블록이 세트,위블록
-					while (map[i+1][j] ==0 && i+1<10) {//!= 에서 ==으로 변경
-						map[i + 1][j] = map[i][j];
-						map[i - 1][j] = 0;
+			if (map[i][j] !=0 && map[i][j+1]==0) {//현재 블록의 밑이 비어있음,현재블록map[i][j]
+				if (map[i][j-1]==map[i][j]) {//현재 블록의 왼쪽과 현재블록이 세트 -2
+					k = j;
+					while (map[i][k+1] ==0 && k+1<10) {
+						map[i][k+1] = map[i][k];
+						map[i][k-1] = 0;
+						k++;
 					}
 				}
-			/*	else if (i+1<4 && map[i][j]==map[i+1][j] && map[i+1][j-1]==0) {//현재 블록의 오른쪽과 현재블록이 세트, 오른쪽 블록의 아래가 비어있음
-					while (map[i][j] == 0 && map[i+1][j-1]==0 && ) {
-					
+				else if (i+1<4 && map[i][j]==map[i+1][j] && map[i+1][j+1]==0) {//현재 블록의 아래블록과 현재블록이 세트,아래블록의 밑이 비어있음-3
+					k = j;
+					while (map[i][k+1] == 0 && map[i+1][k+1]==0 &&k+1<10) {
+						map[i][k+1] = map[i][k]; map[i + 1][k+1] = map[i][k];
+						map[i][k] = 0; map[i + 1][k] = 0;
+						k++;
 					}
 				}
-				else if (j-1>=0 && map[i][j-1]== map[i][j]) {//왼
-				
-				}*/
+				else if(map[i][j] != map[i+1][j] && ((map[i][j]!= map[i-1][j] && i-1>=0) || i-1<0) ){//현재 블록의 밑이 비어있음-1
+					k = j;
+					while (map[i][k + 1] == 0 && k + 1 < 10) {
+						map[i][k + 1] = map[i][k];
+						map[i][k] = 0;
+						k++;
+					}
+				}
 			}
 		}
 	}
@@ -113,15 +121,37 @@ void green(int num,int a) {
 			map[i][j] = map[i-num][j];
 		}
 	}
-
+	int k = 0;
 	for (int i = 8; i > 3; i--) {
 		for (int j = 0; j < 4; j++) {
-			if (map[i][j] != 0 && map[i-1][j] == 0) {
-				
+			if (map[i][j] != 0 && map[i+1][j] == 0) {//현재블록의 밑이 비어있음,현재 map[i][j]
+				if(map[i][j]==map[i][j+1] && map[i+1][j+1] ==0) {//현재블록의 오른쪽과 현재블록이 세트, 오른쪽의 밑이 비어있음 -2
+					k = i;
+					while (map[k+1][j]==0 && map[k+1][j+1] ==0 && k+1<10) {
+						map[k + 1][j] = map[k][j]; map[k + 1][j + 1] = map[k][j];
+						map[k][j] = 0; map[k][j + 1] = 0;
+						k++;
+					}
+				}
+				else if (map[i][j]==map[i-1][j]) {//현재블록과 위의블록이 세트 -3
+					k = i;
+					while (map[k+1][j]==0 && k+1<10) {
+						map[k + 1][j] = map[k][j];
+						map[k - 1][j] = 0;
+						k++;
+					}
+				}
+				else if(map[i][j] != map[i][j+1] && ((map[i][j]!=map[i][j-1] && j-1>=0)|| j-1<0)){//현재블록의 밑이 비어있음 -1 수정
+					k = i;
+					while (map[k+1][j]==0 &&k+1<10) {
+						map[k + 1][j] = map[k][j];
+						map[k][j] = 0;
+						k++;
+					}
+				}
 			}
 		}
 	}
-
 }
 
 
@@ -146,8 +176,7 @@ bool check() {
 		}
 	}
 	if (num>0) { blue(num, a); }
-
-	num = 0;
+	if (map[0][5] != 0 || map[1][5] != 0 || map[2][5] != 0 || map[3][5] != 0) { s_blue(); }
 	for (int i = 4; i < 10; i++) {//green
 		n = 0;
 		for (int j = 0; j < 4; j++) {
@@ -163,14 +192,42 @@ bool check() {
 	}
 
 	if (num>0) { green(num, a); }
-
+	if (map[5][0] != 0 || map[5][1] != 0 || map[5][2] != 0 || map[5][3] != 0) { s_green(); }
 	if (score > 0) { answer += score; return true; }
 	return false;
 }
 
+void s_blue() {
+	int n = 9;
+	for (int j = 4; j < 6; j++) { //blue
+		for (int i = 0; i < 4; i++) {
+			if (map[i][j] != 0) {
+				map[0][n] = 0;
+				map[1][n] = 0;
+				map[2][n] = 0;
+				map[3][n--] = 0; 
+				break;
+			}
+		}
+	}
+	blue(0,0);
+}
 
-
-
+void s_green() {
+	int n = 9;
+	for (int i = 4; i < 6; i++) { 
+		for (int j = 0; j < 4; j++) {
+			if (map[i][j] != 0) {
+				map[n][0] = 0;
+				map[n][1] = 0;
+				map[n][2] = 0;
+				map[n--][3] = 0;
+				break;
+			}
+		}
+	}
+	green(0, 0);
+}
 int main() {
 
 	cin >> n;
@@ -179,7 +236,7 @@ int main() {
 		cin >> a >> b >> c;
 		qq.push({a,b,c});
 	}
-
+	bool c;
 	while (qq.empty() !=true) {
 
 		int t = qq.front().t;
@@ -189,14 +246,24 @@ int main() {
 		
 		bn++;
 		new_block(t,x,y);
-		check();
-		cout << "================================\n";
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				cout << map[i][j] << " ";
-			}cout << "\n";
+		c = check();
+		while (c==true) {
+			c = check();
 		}
 	}
-
+		
+		int answer2 = 0;
+		for (int i = 0; i < 4;i++) {
+			for (int j = 4; j < 10;j++) {
+				if (map[i][j] != 0) { answer2++; }
+			}
+		}
+		for (int i = 4; i < 10; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (map[i][j] != 0) { answer2++; }
+			}
+		}
+		cout << answer<<"\n";
+		cout << answer2;
 	return 0;
 }
