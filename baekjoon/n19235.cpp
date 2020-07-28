@@ -92,7 +92,7 @@ void blue(int num,int a) {
 						k++;
 					}
 				}
-				else if (i+1<4 && map[i][j]==map[i+1][j] && map[i+1][j+1]==0) {//현재 블록의 아래블록과 현재블록이 세트,아래블록의 밑이 비어있음-3
+				else if (map[i][j]==map[i+1][j] && map[i+1][j+1]==0) {//현재 블록의 아래블록과 현재블록이 세트,아래블록의 밑이 비어있음-3
 					k = j;
 					while (map[i][k+1] == 0 && map[i+1][k+1]==0 &&k+1<10) {
 						map[i][k+1] = map[i][k]; map[i + 1][k+1] = map[i][k];
@@ -177,6 +177,8 @@ bool check() {
 	}
 	if (num>0) { blue(num, a); }
 	if (map[0][5] != 0 || map[1][5] != 0 || map[2][5] != 0 || map[3][5] != 0) { s_blue(); }
+
+	num = 0;
 	for (int i = 4; i < 10; i++) {//green
 		n = 0;
 		for (int j = 0; j < 4; j++) {
