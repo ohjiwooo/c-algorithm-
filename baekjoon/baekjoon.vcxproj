@@ -223,7 +223,7 @@
     <ClCompile Include="n17471.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="n17472.cpp" />
+    <ClCompile Include="n17472-다시.cpp" />
     <ClCompile Include="n1753.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>

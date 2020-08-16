@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<algorithm>
 using namespace std;
 
 int n, m;
@@ -7,7 +8,11 @@ int map[15][15];
 int imap[4] = { -1,0,1,0 };//위 오 아 왼
 int jmap[4] = { 0,1,0,-1 };
 int num;//섬의개수
-int ans = 0;
+int p[15];
+int arr[150][3];
+int arr2[7] = { 150 };
+bool v[7][7];
+int nownum = 0;
 
 void f(int nn,int a,int b,bool vis[15][15]) {
 
@@ -31,7 +36,12 @@ void f(int nn,int a,int b,bool vis[15][15]) {
 }
 
 int numbering() {
-	bool vis[15][15] = { false };
+	bool vis[15][15];
+	for (int i = 0; i < 15; i++) {
+		for (int j = 0; j < 15; j++) {
+			vis[i][j] = false;
+		}
+	}
 	int nn = 1;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
@@ -43,7 +53,7 @@ int numbering() {
 	return --nn;
 }
 
-bool ff(int a,int b,int vis[15][15]) {
+void ff(int a,int b,bool vis[15][15]) {
 	queue<pair<int, int>> qq;
 	queue<pair<int, int>> qq2;
 	qq.push(make_pair(a, b));
@@ -69,7 +79,6 @@ bool ff(int a,int b,int vis[15][15]) {
 		}
 	}
 	
-	int arr[150] = {150};
 	while (qq2.empty() != true) {
 		int ni = qq2.front().first;
 		int nj = qq2.front().second;
@@ -79,10 +88,11 @@ bool ff(int a,int b,int vis[15][15]) {
 			int tj = nj;
 			int d = 0;
 			while (ti+imap[i] >= 0 && ti+imap[i] < n && tj+jmap[i]>=0 && tj+jmap[i] <m ) {
-				if (map[ti+imap[i]][tj+jmap[i]] != 0 && map[ti + imap[i]][tj + jmap[i]] != map[a][b]) {
-					if (arr[map[ti + imap[i]][tj + jmap[i]]] > d ) {
-						arr[map[ti + imap[i]][tj + jmap[i]]] = d;
-						break;
+				if (map[ti+imap[i]][tj+jmap[i]] != 0 && map[ti + imap[i]][tj + jmap[i]] != map[a][b]) {//섬발견
+					if ( v[map[a][b]][map[ti + imap[i]][tj + jmap[i]]] != true) {
+						if (arr2[map[ti + imap[i]][tj + jmap[i]]] > d) {
+							map[ti + imap[i]][tj + jmap[i]] = d;
+						}
 					}
 				}
 				else if (map[ti + imap[i]][tj + jmap[i]] == map[a][b]) {
@@ -94,31 +104,55 @@ bool ff(int a,int b,int vis[15][15]) {
 			}
 		}
 	}
-	for (int i = 1; i <=num;i++) {
-		if (i!=map[a][b] && arr[i]!=150 && arr[i]>=2) {
-			ans += arr[i];
-		}
-		else if (i !=map[a][b] && (arr[i]==150 || arr[i] <2)) {
-			return false;
+	
+	for (int i = 1; i <= num;i++) {
+		if ( i !=map[a][b] && arr2[i]!=150) {
+			v[map[a][b]][i] = true;
+			v[i][map[a][b]] = true;
+			arr[nownum][0] = map[a][b];
+			arr[nownum][1] = i;
+			arr[nownum++][2] = arr2[i];
 		}
 	}
-	return true;
+
 }
 
-bool find() {
+void find() {
 
-	int vis[15][15] = { false };
-
+	bool vis[15][15];
+	for (int i = 0; i < 15; i++) {
+		for (int j = 0; j < 15; j++) {
+			vis[i][j] = false;
+		}
+	}
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			if (map[i][j] != 0 && vis[i][j]!=true) {
-				if (ff(i, j, vis) == false) { cout << -1; return false; }
+			if (map[i][j] != 0 && vis[i][j] != true) {
+				ff(i, j, vis);
 			}
 		}
 	}
+}
+bool com() {
+
 
 }
 
+void kruskal() {
+
+	for (int i = 1; i <= num;i++) {
+		p[i] = i;
+	}//노드의 부모를 자기자신으로
+
+	sort(arr, arr + nownum);
+
+	for (int i = 0; i < nownum;i++) {
+	
+		cout << arr[i][0] << " " << arr[i][1] << " " << arr[i][2];
+
+	}cout << "\n";
+
+}
 
 int main() {
 
@@ -139,9 +173,10 @@ int main() {
 		}cout << "\n";
 	}*/
 
-	if (find() == false) { return 0; }
+	find();
+	kruskal();
 
-	cout << ans;
+	
 
 	return 0;
 }

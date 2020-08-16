@@ -189,7 +189,7 @@
     <ClCompile Include="n17281.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="n17472.cpp">
+    <ClCompile Include="n17472-다시.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
