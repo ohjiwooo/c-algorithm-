@@ -6,11 +6,12 @@ int n, m;
 int map[15][15];
 int imap[4] = { -1,0,1,0 };//위 오 아 왼
 int jmap[4] = { 0,1,0,-1 };
+int num;//섬의개수
+int ans = 0;
 
-void f(int nn,int a,int b) {
+void f(int nn,int a,int b,bool vis[15][15]) {
 
 	queue <pair<int, int>>qq;
-	int vis[15][15] = { false };
 	qq.push(make_pair(a,b));
 	map[a][b] = nn;
 	vis[a][b] = true;
@@ -30,20 +31,19 @@ void f(int nn,int a,int b) {
 }
 
 int numbering() {
-
+	bool vis[15][15] = { false };
 	int nn = 1;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			if (map[i][j]==1) {
-				f(nn++,i,j);
+			if (map[i][j]==1 && vis[i][j]!=true) {
+				f(nn++,i,j,vis);
 			}
 		}
 	}
 	return --nn;
 }
 
-void ff(int a,int b,int vis[15][15]) {
-	
+bool ff(int a,int b,int vis[15][15]) {
 	queue<pair<int, int>> qq;
 	queue<pair<int, int>> qq2;
 	qq.push(make_pair(a, b));
@@ -55,18 +55,16 @@ void ff(int a,int b,int vis[15][15]) {
 		int nj = qq.front().second;
 		qq.pop();
 
-		if (map[ni+imap[0]][nj+jmap[0]]==0 || map[ni + imap[1]][nj + jmap[1]] == 0 || map[ni + imap[2]][nj + jmap[2]] == 0 || 
-			map[ni + imap[3]][nj + jmap[3]] == 0 ) {
+		if ((ni-1 >= 0 && map[ni+imap[0]][nj+jmap[0]]==0) ||(nj+1 <m && map[ni + imap[1]][nj + jmap[1]] == 0) 
+			||(ni+1 < n && map[ni + imap[2]][nj + jmap[2]] == 0 )||(nj-1 >=0 && map[ni + imap[3]][nj + jmap[3]] == 0) ) {
 			qq2.push(make_pair(ni, nj));//밖 부분일경우
 		}
-		else {//아닐경우
-			for (int i = 0; i < 4; i++) {
-				int newi = ni + imap[i];
-				int newj = nj + jmap[i];
-				if (newi >= 0 && newi < n && newj >= 0 && newj < m && map[newi][newj] != 0 && vis[newi][newj]!=true) {
-					qq.push(make_pair(newi, newj));
-					vis[newi][newj] = true;
-				}
+		for (int i = 0; i < 4; i++) {
+			int newi = ni + imap[i];
+			int newj = nj + jmap[i];
+			if (newi >= 0 && newi < n && newj >= 0 && newj < m && map[newi][newj] != 0 && vis[newi][newj]!=true) {
+				qq.push(make_pair(newi, newj));
+				vis[newi][newj] = true;
 			}
 		}
 	}
@@ -75,32 +73,46 @@ void ff(int a,int b,int vis[15][15]) {
 	while (qq2.empty() != true) {
 		int ni = qq2.front().first;
 		int nj = qq2.front().second;
-
+		qq2.pop();
 		for (int i = 0; i < 4;i++) {
-			int a = ni;
-			int b = nj;
+			int ti = ni;
+			int tj = nj;
 			int d = 0;
-			while (a+imap[i] >= 0 && a+imap[i] < n && b+jmap[i]>=0 && b+jmap[i] <m) {
-				if (map[a+imap[i]][b+jmap[i]] != 0) {
-					if (map[a + imap[i]][b + jmap[i]] > d ) {
-						map[a + imap[i]][b + jmap[i]] = d;
+			while (ti+imap[i] >= 0 && ti+imap[i] < n && tj+jmap[i]>=0 && tj+jmap[i] <m ) {
+				if (map[ti+imap[i]][tj+jmap[i]] != 0 && map[ti + imap[i]][tj + jmap[i]] != map[a][b]) {
+					if (arr[map[ti + imap[i]][tj + jmap[i]]] > d ) {
+						arr[map[ti + imap[i]][tj + jmap[i]]] = d;
+						break;
 					}
 				}
+				else if (map[ti + imap[i]][tj + jmap[i]] == map[a][b]) {
+					break;
+				}
+				ti += imap[i];
+				tj += jmap[i];
 				d++;
 			}
 		}
 	}
-
+	for (int i = 1; i <=num;i++) {
+		if (i!=map[a][b] && arr[i]!=150 && arr[i]>=2) {
+			ans += arr[i];
+		}
+		else if (i !=map[a][b] && (arr[i]==150 || arr[i] <2)) {
+			return false;
+		}
+	}
+	return true;
 }
 
-void find() {
+bool find() {
 
 	int vis[15][15] = { false };
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
 			if (map[i][j] != 0 && vis[i][j]!=true) {
-				ff();
+				if (ff(i, j, vis) == false) { cout << -1; return false; }
 			}
 		}
 	}
@@ -110,7 +122,6 @@ void find() {
 
 int main() {
 
-	int num;//섬의개수
 
 	cin >> n >> m;
 
@@ -121,8 +132,16 @@ int main() {
 	}
 
 	num = numbering();
+/*	cout << "=======================\n";
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cout<< map[i][j]<<" ";
+		}cout << "\n";
+	}*/
 
+	if (find() == false) { return 0; }
 
+	cout << ans;
 
 	return 0;
 }
