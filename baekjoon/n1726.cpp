@@ -1,6 +1,14 @@
 #include<iostream>
-
+#include<queue>
 using namespace std;
+
+typedef struct s {
+
+	int i;
+	int j;
+	int d;
+	int ans = 0;
+}s;
 
 int m,n;
 int map[150][150];
@@ -8,45 +16,56 @@ int ni, nj, nd;
 int ansi, ansj, ansd;
 int imap[5] = {0,0,0,1,-1};
 int jmap[5] = {0,1,-1,0,0};
-int answer = 987654321;
+bool vis[150][150][5];
 
-void go(int i, int j, int d, int ans);
+void bfs() {
 
-void turn(int i, int j, int d, int ans,int dd) {
-
-	for (int k = 1; k <= 4; k++) {
-		if (i == ansi && j == ansj && k == ansd) {//answer
-			if (d == k) {
-				if (ans < answer) { answer = ans; return; }
-			}
-			else {
-				if (ans + 1 < answer) { answer = ans + 1; return; }
+	queue <s> t;
+	queue <s> g;
+	t.push({ ni,nj,nd,0 });
+	g.push({ ni,nj,nd,0 });
+	int ts=t.size();
+	while (1) {
+		while(g.empty()!=true) {
+			int i = g.front().i;
+			int j = g.front().j;
+			int d = g.front().d;
+			int a = g.front().ans;
+			g.pop();
+			int k = 1;
+			int temp;
+			vis[i][j][d] = true;
+			while (i + imap[d] * k > 0 && i + imap[d] * k <= m && j + jmap[d] * k > 0 && j + jmap[d] * k <= n && map[i + imap[d] * k][j + jmap[d] * k] == 0) {
+				t.push({ i + imap[d] * k,j + jmap[d] * k,d,a + 1 });
+				k++;
 			}
 		}
+		for (int k = 0; k < ts; k++) {
+			int i = t.front().i;
+			int j = t.front().j;
+			int d = t.front().d;
+			int a = t.front().ans;
+			t.pop();
 
-		if (i+imap[k] > 0 && i+imap[k] <= m && j+jmap[k] > 0 && j+jmap[k] <= n && map[i + imap[k]][j + jmap[k]] == 0 && k != dd) {
-			
-			if ((d==1 && k==2) || (d==2 && k==1) || (d==3 && k==4) || (d==4 && k==3)) {
-				go(i, j, k, ans+2 );
+			for (int k = 1; k <= 4; k++) {
+				if (i == ansi && j == ansj && k == ansd && k==d) { 
+					cout << a; return; }
+				else if (i == ansi && j == ansj && k == ansd && ((d == 1 && k == 2) || (d == 2 && k == 1) || (d == 3 && k == 4) || (d == 4 && k == 3))) {
+					cout << a+2; return;
+				}
+				else if (i == ansi && j == ansj && k == ansd && k != d) { 
+					cout << a+1; return; }
+
+				if (i + imap[k] > 0 && i + imap[k] <= m && j + jmap[k] > 0 && j + jmap[k] <= n && map[i + imap[k]][j + jmap[k]] == 0 && vis[i][j][k] != true) {
+					vis[i][j][k] = true;
+					if ((d == 1 && k == 2) || (d == 2 && k == 1) || (d == 3 && k == 4) || (d == 4 && k == 3)) {
+						t.push({ i, j, k, a+1 });
+						vis[i][j][k] = false;
+					}
+					else { g.push({ i, j, k, a + 1 }); }
+				}
 			}
-			else if (d==k) { go(i, j, k, ans); }
-			else { go(i, j, k,ans+1); }
-
-		}
-	}
-}
-
-void go(int i, int j, int d, int ans) {
-	int k = 1;
-	int temp;
-	if (d == 1) { temp = 2; }
-	else if (d == 2) { temp = 1; }
-	else  if (d == 3) { temp = 4; }
-	else { temp = 3; }
-	while (i + imap[d] * k > 0 && i + imap[d] * k <= m && j + jmap[d] * k > 0 && j + jmap[d] * k <= n && map[i + imap[d] * k][j + jmap[d] * k] == 0) {
-	
-		turn(i + imap[d] * k, j + jmap[d] * k, d, ans + 1, temp);//Á÷Áø
-		k++;
+		}ts = t.size();
 	}
 }
 
@@ -59,7 +78,6 @@ int main() {
 		}
 	}
 	cin >> ni >> nj >> nd >> ansi >> ansj >> ansd;
-	turn(ni,nj,nd,0,7);
-	cout << answer;
+	bfs();
 	return 0;
 }
