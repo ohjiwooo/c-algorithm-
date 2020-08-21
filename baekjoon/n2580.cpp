@@ -1,120 +1,13 @@
 #include<iostream>
-//#include<algorithm>
+#include<vector>
 using namespace std;
 
 int map[15][15];
 int num = 0;
-//int answer[15][15];
-typedef struct s{
-
-	int a=0;//행 or 열
-	int b=0;//0의 갯수
-
-}s;
-
-bool com(s s1, s s2) {
-	return s1.b < s2.b;
-}
-
-void fill_i(int n) {
-
-	int ans[10] = { 0 };
-	int a = 0;
-	for (int i = 0; i < 9;i++) {
-		if (map[n][i] == 0) { a = i; }
-		else {
-			ans[map[n][i]] = 1;
-		}
-	}
-	for (int i = 1; i <= 9; i++) {
-		if (ans[i] == 0) { map[n][a] = i; }
-	}
-}
-void fill_j(int n) {
-
-	int ans[10] = { 0 };
-	int a = 0;
-	for (int i = 0; i < 9; i++) {
-		if (map[i][n] == 0) { a = i; }
-		else {
-			ans[map[i][n]] = 1;
-		}
-	}
-	for (int i = 1; i <= 9; i++) {
-		if (ans[i] == 0) { map[a][n] = i; }
-	}
-}
-
-void fill_s(int a,int b) {
-	int ans[10] = { 0 };
-	int tempi, tempj;
-
-	for (int i = a; i < a + 3; i++) {
-		for (int j = b; j < b + 3; j++) {
-			if (map[i][j] == 0) { tempi = i; tempj = j;; }
-			else {
-				ans[map[i][j]] = 1;
-			}
-		}
-	}
-	for (int i = 1; i <= 9; i++) {
-		if (ans[i] == 0) { map[tempi][tempj] = i; }
-	}
-
-}
-void c() {
-
-	s arr1[9];
-	s arr2[9];
-	int n;
-	for (int i = 0; i < 9; i++) {//행
-		n = 0;
-		for (int j = 0; j < 9; j++) {
-			if (map[i][j] == 0) { n++; }
-		}
-		if (n==1) {
-			fill_i(i);
-			num--;
-			return;
-		}
-		//arr1[i].a = i; arr1[i].b = n;
-	}//sort(arr1,arr1+9,com);
-
-	for (int j = 0; j < 9; j++) {//열
-		n = 0;
-		for (int i = 0; i < 9; i++) {
-			if (map[i][j] == 0) { n++; }
-		}if (n == 1) {
-			fill_j(j);
-			num--;
-			return;
-		}
-	//	arr2[j].a = j; arr2[j].b = n;
-	}//sort(arr2, arr2 + 9, com);
+vector <pair<int, int>>v(100);
 
 
-	
-	int a = 0; int  b = 0; int c = 0; n = 0;
-	while (c < 9) {
-		for (int k = 0; k < 3; k++) {
-			for (int i = a; i < a + 3; i++) {
-				for (int j = b; j < b + 3; j++) {
-					if (map[i][j] == 0) { n++; }
-				}
-			}
-			if (n == 1) {
-				fill_s(a, b);
-				num--;
-				return;
-			}
-			b += 3; n = 0;
-		}
-		a += 3; b = 0; n = 0;
-		c++;
-	}
-	
-
-}
+//전체 0 충족못함
 
 void p() {
 	cout << "==============================\n";
@@ -129,40 +22,100 @@ void in() {
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
 			cin >> map[i][j];
-			if (map[i][j] == 0) { num++; }
+			if (map[i][j] == 0) { v[num].first = i; v[num++].second = j; }
 		}
 	}
 }
-/*void in2() {
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++) {
-			cin >> answer[i][j];
+
+bool check(int i, int j) {
+	
+	bool arr[10] = { false };
+	bool ans = true;
+
+	for (int k = 0; k < 9; k++) { //행검사
+		if (map[i][k]!=0) {
+			if (arr[map[i][k]] == false) { arr[map[i][k]] = true; }
+			else { return false; }
 		}
 	}
-}*/
 
-/*bool ans() {
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++) {
-			if (answer[i][j]!= map[i][j]) {
-				return false;
+	
+	for (int k = 0; k < 10; k++) { //열검사
+		arr[k] = false;
+	}
+	for (int k = 0; k < 9; k++) { //열검사
+		if (map[k][j]!=0) {
+			if (arr[map[k][j]] == false) { arr[map[k][j]] = true; }
+			else { return false; }
+		}
+	}
+
+	for (int k = 0; k < 10; k++) { //열검사
+		arr[k] = false;
+	}
+	int k, k2;
+	if (i < 3) { k = 0; }
+	else if (i < 6) { k = 3; }
+	else { k = 6; }
+	if (j < 3) { k2 = 0; }
+	else if (j < 6) { k2 = 3; }
+	else { k2 = 6; }
+	for (int a = k; a < k + 3;a++) {//사각검사
+		for (int b = k2; b < k2 + 3;b++) {
+			if (map[a][b]!=0) {
+				if (arr[map[a][b]] == false) { arr[map[a][b]] = true; }
+				else { return false; }
 			}
 		}
 	}
+
 	return true;
-}*/
+}
+
+bool f(int now) {
+	
+	if (num == 0) { p(); return true; }
+	bool arr[10] = { false };//false가 아직 안쓴 숫자
+	int ni = v[now].first;
+	int nj = v[now].second;
+
+	for (int i = 0; i < 9;i++) {//행
+		arr[map[ni][i]] = true;
+	}
+	for (int i = 0; i < 9; i++) {//행
+		arr[map[i][nj]] = true;
+	}
+	int k, k2;
+	if (ni < 3) { k = 0; }
+	else if (ni < 6) { k = 3; }
+	else { k = 6; }
+	if (nj < 3) { k2 = 0; }
+	else if (nj < 6) { k2 = 3; }
+	else { k2 = 6; }
+
+	for (int a = k; a < k + 3; a++) {//사각검사 
+		for (int b = k2; b < k2 + 3; b++) {
+			arr[map[a][b]] = true;
+		}
+	}
+
+	for (int i = 1; i < 10;i++) {
+		if (arr[i] != true ) {
+			map[ni][nj] = i;
+			if (check(ni,nj)==true) {
+				num--;
+				if (f(now + 1) == true) { return true; };
+				num++;
+			}
+		}
+	}
+	return false;
+}
+
+
 int main() {
 	
-//	in2();
 	in();
-	
-	while (num>0) {
-		c();
-	}
-	p();
-//	if (ans() == true) { cout << "\ngood\n"; }
-//	else { cout << "\nbad\n"; }
-
-	
+	f(0);
 	return 0;
 }
