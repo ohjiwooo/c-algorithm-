@@ -25,7 +25,7 @@ void bfs() {
 	int ss = 0;
 	while (1) {
 
-		while (t.empty()!=true) {
+		while (t.empty() != true) {
 			int i = t.front().i;
 			int j = t.front().j;
 			int d = t.front().d;
@@ -33,18 +33,16 @@ void bfs() {
 			t.pop();
 			if (i == ansi && j == ansj && d == ansd) { cout << a; return; }
 			for (int k = 1; k <= 4; k++) {
-				if (vis[i][j][k] != true) {
-					vis[i][j][k] = true;
-					if (d==k) {
-						g.push({ i, j, k, a });
-					}
-					else if ((d == 1 && k == 2) || (d == 2 && k == 1) || (d == 3 && k == 4) || (d == 4 && k == 3)) {
-						g.push({ i, j, k, a + 2 });
-					}
-					else { g.push({ i, j, k, a + 1 }); }
+				if (d == k) {
+					g.push({ i, j, k, a });
 				}
+				else if ((d == 1 && k == 2) || (d == 2 && k == 1) || (d == 3 && k == 4) || (d == 4 && k == 3)) {
+					g.push({ i, j, k, a + 2 });
+				}
+				else { g.push({ i, j, k, a + 1 }); }
 			}
 		}
+
 		int size = g.size();
 		for (int nn = 0; nn < size; nn++) {
 			int i = g.front().i;
@@ -52,22 +50,26 @@ void bfs() {
 			int d = g.front().d;
 			int a = g.front().ans;
 			g.pop();
-			if (a==ss &&i == ansi && j == ansj && d == ansd) { cout << a; return; }
+			if (a == ss && i == ansi && j == ansj && d == ansd) { cout << a; return; }
 			int k = 1;
 			if (a == ss) {
 				while (i + imap[d] * k > 0 && i + imap[d] * k <= m && j + jmap[d] * k > 0 && j + jmap[d] * k <= n && map[i + imap[d] * k][j + jmap[d] * k] == 0
-					&& k<=3) {
-					t.push({ i + imap[d] * k,j + jmap[d] * k,d,a + 1 });
+					&& k <= 3) {
+					if (vis[i + imap[d] * k][j + jmap[d] * k][d] != true) {
+						t.push({ i + imap[d] * k,j + jmap[d] * k,d,a + 1 });
+						vis[i + imap[d] * k][j + jmap[d] * k][d] = true;
+					}
 					k++;
 				}
 			}
 			else {
-				g.push({ i, j, d, a }); 
+				g.push({ i, j, d, a });
 			}
 		}
 		ss++;
 	}
 }
+
 
 int main() {
 
