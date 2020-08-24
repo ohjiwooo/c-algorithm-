@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "code", "code\code.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baekjoon", "baekjoon\baekjoon.vcxproj", "{A8D3B7EF-5535-440B-94FA-D22D5866AB79}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kakao", "kakao\kakao.vcxproj", "{4B1FB378-0F98-4A35-BEB3-D56171EB5269}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,6 +73,14 @@ Global
 		{A8D3B7EF-5535-440B-94FA-D22D5866AB79}.Release|x64.Build.0 = Release|x64
 		{A8D3B7EF-5535-440B-94FA-D22D5866AB79}.Release|x86.ActiveCfg = Release|Win32
 		{A8D3B7EF-5535-440B-94FA-D22D5866AB79}.Release|x86.Build.0 = Release|Win32
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Debug|x64.ActiveCfg = Debug|x64
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Debug|x64.Build.0 = Debug|x64
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Debug|x86.Build.0 = Debug|Win32
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Release|x64.ActiveCfg = Release|x64
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Release|x64.Build.0 = Release|x64
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Release|x86.ActiveCfg = Release|Win32
+		{4B1FB378-0F98-4A35-BEB3-D56171EB5269}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
