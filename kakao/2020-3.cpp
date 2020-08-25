@@ -25,13 +25,13 @@ vector<vector<int>> turn(vector<vector<int>> key, int map2[100][100]) {
 		}
 		k--;
 	}
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < m; j++) {
 			key[i][j] = ans[i][j];
 		}
 	}
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < m; j++) {
 			map2[i][j] = key[i][j];
 		}
 	}
@@ -45,12 +45,19 @@ void init() {
 		}
 	}
 }
+void init2() {
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
+			map2[i][j] = 0;
+		}
+	}
 
+}
 
 bool solution(vector<vector<int>> key, vector<vector<int>> lock) {
 	bool answer = false;
 
-
+	int temp[100][100] = { 0 };
 	n = lock.size();
 	m = key.size();
 
@@ -73,11 +80,16 @@ bool solution(vector<vector<int>> key, vector<vector<int>> lock) {
 		key = turn(key, map2);
 
 		int d = m - 1;//ÇöÀç¹Ø
+		int k = 0;//³»¸°Ä­¼ö
+
 		while (d < m * 2 + n - 2) {
 			d++;
-			for (int i = d; i > d - m; i--) { //¹ØÀ¸·Î ³»¸®±â
+			k++;
+			init2();
+
+			for (int i = 0; i < m; i++) { //¹ØÀ¸·Î ³»¸®±â
 				for (int j = 0; j < m; j++) {
-					map2[i][j] = map2[i - 1][j];
+					map2[i + k][j] = key[i][j];
 				}
 			}
 
@@ -93,6 +105,7 @@ bool solution(vector<vector<int>> key, vector<vector<int>> lock) {
 					}
 				}
 
+
 				int h = num;
 				answer = false;
 				for (int i = m; i < m + n; i++) {
@@ -102,7 +115,13 @@ bool solution(vector<vector<int>> key, vector<vector<int>> lock) {
 								answer = false; break;
 							}
 							else if (map1[i][j] == 0 && map2[i][j] == 1) {
-								h--; answer = true;
+								answer = true; h--;
+							}
+							else if (map1[i][j] == 1 && map2[i][j] == 0) {
+								answer = true;
+							}
+							else if (map1[i][j] == 0 && map2[i][j] == 0) {
+								answer = false; break;
 							}
 						}
 					}
@@ -115,39 +134,4 @@ bool solution(vector<vector<int>> key, vector<vector<int>> lock) {
 	}
 	answer = false;
 	return answer;
-}
-
-
-int main() {
-
-	vector<vector<int>> key(3);
-	vector<vector<int>> lock(3);
-	int map[100][100];
-	key[0].push_back(0);
-	key[0].push_back(0);
-	key[0].push_back(0);
-	key[1].push_back(1);
-	key[1].push_back(0);
-	key[1].push_back(0);
-	key[2].push_back(0);
-	key[2].push_back(1);
-	key[2].push_back(1);
-
-	lock[0].push_back(1);
-	lock[0].push_back(1);
-	lock[0].push_back(1);
-	lock[1].push_back(1);
-	lock[1].push_back(1);
-	lock[1].push_back(0);
-	lock[2].push_back(1);
-	lock[2].push_back(0);
-	lock[2].push_back(1);
-
-
-	solution(key ,lock);
-
-	if (solution(key, lock) == true) { cout << "true"; }
-	else { cout << "false"; }
-	
-	return 0;
 }
