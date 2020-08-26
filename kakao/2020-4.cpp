@@ -1,19 +1,20 @@
 #include<iostream>
 #include<vector>
-
+#include<queue>
+#include<algorithm>
 using namespace std;
 
 typedef struct s {
 
-	s *child[26];
-	bool end;
-	int arr[100002] = { 0,};
+	s *child[26] = {NULL,};
+	bool end=false;
+	int num = 0;
 }s;
 
 s *creat() {
 
 	s *node = new s;
-	for (int i = 0; i<26;i++) {
+	for (int i = 0; i < 26; i++) {
 		node->child[i] = NULL;
 	}
 	node->end = false;
@@ -21,7 +22,7 @@ s *creat() {
 }
 
 
-void insert(s *root,string key) {
+void insert(s *root, string key) {
 
 	s *p = root;
 	int n = key.length();
@@ -29,127 +30,85 @@ void insert(s *root,string key) {
 		int index = key[i] - 'a';
 
 		if (p->child[index] == NULL) {
-			p ->child[index]= creat();
-			p->arr[n - i]++;
+			p->child[index] = creat();
+			p->num++;
 		}
-		else {
-			p->arr[n - i]++;
-		}
+		else { p->num++; }
 		p = p->child[index];
 	}
 	p->end = true;
-	
+
 }
 
-void r_insert(s *root, string key) {
+int search(s *root, string key) {
 
 	s *p = root;
 	int n = key.length();
-	for (int i = n-1; i >= 0; i--) {
-		int index = key[i] - 'a';
 
-		if (p->child[index] == NULL) {
-			p->child[index] = creat();
-			p->arr[n - i]++;
-		}
-		else {
-			p->arr[n - i]++;
-		}
-		p = p->child[index];
-	}
-	p->end = true;
+	for (int i = 0; i < n;i++) {
 
-}
-int search(s *root,string key) {
-	s*n = root;
-	int ans = 0;
-	int num = key.length();
-	for (int i = 0; i < num;i++) {
-
-		if (key[i] == '?') {
-			for (int k = 0; k < 26;k++) {
-				ans = n->arr[num - i];
-				return ans;
-			}
+		if (key[i]=='?') {
+			return p->num;
 		}
 		else {
 			int index = key[i] - 'a';
-			if (n->child[index]!=NULL) {
-				n = n->child[index];
+			if (p->child[index]!=NULL) {
+				p = p->child[index];
 			}
+			else { return 0; }
 		}
 	}
-	return ans;
-}
 
-int r_search(s *root, string key) {
-	s*n = root;
-	int ans = 0;
-	int num = key.length();
-	for (int i = num-1; i >= 0; i--) {
-
-		if (key[i] == '?') {
-			for (int k = 0; k < 26; k++) {
-				ans = n->arr[num - i];
-				return ans;
-			}
-		}
-		else {
-			int index = key[i] - 'a';
-			if (n->child[index] != NULL) {
-				n = n->child[index];
-			}
-		}
-	}
-	return ans;
 }
 vector<int> solution(vector<string> words, vector<string> queries) {
 	vector<int> answer;
 
-	
-	s *root = creat();
-	s *reverse_root = creat();
+	s *root = new s[10001];
+	s *reverse_root = new s[10001];
 
-	for (int i = 0; i <words.size();i++) { //沥规氢 飘府
-		insert(root,words[i]);
+	for (int i = 0; i < words.size(); i++) {
+		int s = words[i].length();
+		insert(&root[s], words[i]);
 	}
-	for (int i = 0; i < words.size(); i++) { //开规氢 飘府
-		r_insert(reverse_root, words[i]);
+	for (int i = 0; i < words.size(); i++) {
+		reverse(words[i].begin(), words[i].end());
+		int s = words[i].length();
+		insert(&reverse_root[s], words[i]);
 	}
-
-	for (int i = 0; i < queries.size();i++) {
-		if (queries[i][0]=='?') {
-			answer.push_back(r_search(reverse_root, queries[i]));
+	for (int i = 0; i < queries.size(); i++) {
+		if (queries[i][0] == '?') {
+			int s = queries[i].length();
+			reverse(queries[i].begin(), queries[i].end());
+			answer.push_back(search(&reverse_root[s], queries[i]));
 		}
 		else {
-			answer.push_back(search(root, queries[i]));
+			int s = queries[i].length();
+			answer.push_back(search(&root[s], queries[i]));
 		}
 	}
-
 	return answer;
 }
 
 int main() {
 
-	vector<string> words; 
-	vector<string> queries;
-
+	vector<string> words;
+	vector<string> queries; 
 	words.push_back("frodo");
 	words.push_back("front");
 	words.push_back("frost");
 	words.push_back("frozen");
 	words.push_back("frame");
 	words.push_back("kakao");
+	
+	queries.push_back("???doo");
+//	queries.push_back("?????t");
+//	queries.push_back("???t");
 
-	queries.push_back("fro??");
-	queries.push_back("????o");
-	queries.push_back("fr???");
-	queries.push_back("fro???");
-	queries.push_back("pro?");
+	
 
-	vector<int> answer=solution(words,queries);
+	vector<int> answer = solution(words, queries);
 
-	for (int i = 0; i < answer.size();i++) {
+	for (int i = 0; i < answer.size(); i++) {
 		cout << answer[i] << " ";
 	}
 
