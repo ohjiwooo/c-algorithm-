@@ -13,7 +13,7 @@ typedef struct s {
 s *creat() {
 
 	s *newnode = new s;
-	newnode->end = NULL;
+	newnode->end = false;
 	for (int i = 0; i < 26;i++) {
 		newnode->child[i] = NULL;
 	}
