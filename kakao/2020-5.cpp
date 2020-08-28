@@ -13,12 +13,18 @@ typedef struct s{
 }s;
 s map[100][100];
 
+int f(int a,int b) {
+	if (a > b) { return a - b; }
+	else { return b - a; }
 
-void build(int i,int j,int a) {
+}
 
+void build(int i,int j,int a,int n) {
+
+	i = f(i,n);
 	if (a == 0) {//기둥설치
-		if (i==0 || map[i][j].a_e==true || map[i][j].b_s==true || map[i][j].b_e==true) { //바닥이거나 기둥위거나 보 위일때
-			map[i + 1][j].a_e = true;
+		if (i==n || map[i][j].a_e==true || map[i][j].b_s==true || map[i][j].b_e==true) { //바닥이거나 기둥위거나 보 위일때
+			map[i - 1][j].a_e = true;
 			map[i][j].a_s = true;
 		}
 	}
@@ -29,54 +35,56 @@ void build(int i,int j,int a) {
 		}
 	}
 }
-void remove(int i,int j,int a) {
 
+bool check(int n) {
+	bool ans = true;
+	for (int i=0; i <= n;i++) {
+		int i2 = f(i, n);
+		for (int j = 0; j <= n;j++) {
+			if (map[i2][j].a_s==true) {//기둥의 시작점이면
+				//기둥은 바닥 위에 있거나 보의 한쪽 끝 부분 위에 있거나, 또는 다른 기둥 위에 있어야 합니다
+
+				if (i2==n || map[i2][j].b_e==true ||map[i2][j].b_s==true ||map[i2][j].a_e==true) {
+				}
+				else {
+					ans=false;
+				}
+			}
+			if(map[i2][j].b_s==true){//보의 시작점이면
+			//보는 한쪽 끝 부분이 기둥 위에 있거나, 또는 양쪽 끝 부분이 다른 보와 동시에 연결되어 있어야 합니다
+
+				if (map[i2][j].a_e==true || map[i2][j+1].a_e==true ||(map[i2][j].b_e==true && map[i2][j+1].b_s==true)) {
+				}
+				else {
+					ans=false;
+				}
+			}
+		}
+	}
+
+	return ans;
+}
+
+
+void remove(int i,int j,int a,int n) {
+	i = f(i, n);
 	if (a==0) {//기둥삭제
-		if (map[i + 1][j].a_s == false && map[i + 1][j].b_s == false && map[i + 1][j].b_e == false) {//혼자있는기둥
-			map[i + 1][j].a_e = false;
-			map[i][j].a_s = false;
-		}
-		else if ((map[i + 1][j].b_s == true && map[i+1][j].b_e==true &&(map[i+1][j+1].b_s==true || map[i+1][j+1].a_e==true))&&(map[i+1][j-1].b_e==true || map[i+1][j-1].a_e==true)) { //기둥위에 보-양옆보가 있어 기둥삭제 가능
-			map[i][j].a_s = false;
-			map[i + 1][j].a_e = false;
-		}
-		else if (map[i+1][j].b_s==true && map[i+1][j+1].a_e==true && map[i+1][j].b_e==false) {//기둥위에 왼쪽보-다른기둥이있음
-			map[i][j].a_s = false;
-			map[i + 1][j].a_e = false;
-		}
-		else if (map[i+1][j].b_e==true && map[i+1][j].b_s==false && map[i+1][j-1].a_e==true) {//기둥위에 오른쪽보-다른기둥이있음
-			map[i][j].a_s = false;
-			map[i + 1][j].a_e = false;
-		}
-		else if (map[i + 1][j].b_e == true && map[i + 1][j].b_s == true && (map[i + 1][j - 1].a_e == true ||map[i+1][j-1].b_e==true) && 
-			(map[i + 1][j + 1].a_e == true || map[i+1][j+1].b_s==true)) {//기둥위에 양쪽보,둘다 기둥있음이나 보가있음
-			map[i][j].a_s = false;
-			map[i + 1][j].a_e = false;
+		map[i][j].a_s = false;
+		map[i - 1][j].a_e = false;
+		if (check(n)==false) {
+			map[i][j].a_s = true;
+			map[i - 1][j].a_e = true;
 		}
 	}
-	else {//보 삭제
-		if (map[i][j].a_s==false && map[i][j+1].a_s==false && map[i][j].b_e==false && map[i][j+1].b_s==false) {//혼자있는보
-			map[i][j].b_s = false;
-			map[i][j].b_e = false;
+	else {
+		map[i][j].b_s = false;
+		map[i][j+1].b_e = false;
+		if (check(n) == false) {
+			map[i][j].b_s = true;
+			map[i][j+1].b_e = true;
 		}
-		else if (map[i][j+1].b_s==true &&(map[i][j+1].a_e==true || map[i][j].a_e==true)&& map[i][j].b_e==false) {//오른쪽에보,기둥있음
-			map[i][j].b_s = false;
-			map[i][j].b_e = false;
-		}
-		else if (map[i][j].b_e == true && (map[i][j - 1].a_e == true || map[i][j].a_e==true) && map[i][j+1].b_s==false) {//왼쪽에보,기둥있음
-			map[i][j].b_s = false;
-			map[i][j].b_e = false;
-		}
-		else if ((map[i][j].a_e == true && map[i][j].a_s == true && map[i][j + 1].a_s == false) || (map[i][j].a_s==false && map[i][j+1].a_e==true && map[i][j+1].a_s==true)) {//위에기둥이있지만 밑에도기둥이있음
-			map[i][j].b_s = false;
-			map[i][j].b_e = false;
-		}
-		else if (map[i][j].a_s==true && map[i][j+1].a_s==true && map[i][j].a_e==true && map[i][j+1].a_e==true){
-			map[i][j].b_s = false;
-			map[i][j].b_e = false;
-		}
+	}
 
-	}
 
 }
 vector<vector<int>> solution(int n, vector<vector<int>> build_frame) {
@@ -91,19 +99,19 @@ vector<vector<int>> solution(int n, vector<vector<int>> build_frame) {
 		int b = build_frame[k][3];//0-삭제,1-설치
 
 		if (b==1) {
-			build(i, j, a);
+			build(i, j, a,n);
 		}
 		else {
-			remove(i,j,a);
+			remove(i,j,a,n);
 		}
 	}
 	for (int i = 0; i <= n;i++) {
 		for (int j = 0; j <= n;j++) {
 			if (map[i][j].a_s==true) {
-				answer.push_back({ j,i,0 });
+				answer.push_back({ j,f(n,i),0 });
 				map[i][j].a_s = false; 
 			}if (map[i][j].b_s==true) {
-				answer.push_back({ j,i,1 });
+				answer.push_back({ j,f(n,i),1 });
 			}
 		}
 	}
