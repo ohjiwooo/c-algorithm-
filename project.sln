@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kakao", "kakao\kakao.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "algorithm", "algorithm\algorithm.vcxproj", "{E0BB580C-6CDA-4C5D-8815-1C4D124B8746}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ss", "ss\ss.vcxproj", "{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{E0BB580C-6CDA-4C5D-8815-1C4D124B8746}.Release|x64.Build.0 = Release|x64
 		{E0BB580C-6CDA-4C5D-8815-1C4D124B8746}.Release|x86.ActiveCfg = Release|Win32
 		{E0BB580C-6CDA-4C5D-8815-1C4D124B8746}.Release|x86.Build.0 = Release|Win32
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Debug|x64.ActiveCfg = Debug|x64
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Debug|x64.Build.0 = Debug|x64
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Debug|x86.ActiveCfg = Debug|Win32
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Debug|x86.Build.0 = Debug|Win32
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Release|x64.ActiveCfg = Release|x64
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Release|x64.Build.0 = Release|x64
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Release|x86.ActiveCfg = Release|Win32
+		{91C04F97-2F2B-4195-9DF6-A50EB4FA266F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
