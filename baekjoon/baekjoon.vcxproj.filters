@@ -222,5 +222,11 @@
     <ClCompile Include="n1655.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="n3197-f.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n2665.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
