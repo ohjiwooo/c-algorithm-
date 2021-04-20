@@ -15,20 +15,33 @@ float dis(int x,int y,int x2, int y2) {
 int uni(int arr[105],int n,int a,int b) {
 
 	if (arr[a]> arr[b]) {
-		arr[a] = arr[b];
+		arr[arr[a]] = arr[b];
 	}
 	else {
-		arr[b] = arr[a];
+		arr[arr[b]] = arr[a];
 
 	}
+	return 0;
+}
 
+int find(int arr[105],int k) {
+
+	if (arr[k]==k) {
+		return k;
+	}
+	else {
+		arr[k] = find(arr, arr[k]); return arr[k];
+	}
 }
 
 int main() {
 
-	priority_queue < pair<int, pair<int, int>>> pq;
+	priority_queue < pair<float, pair<int, int>>> pq;
 	float star[105][2] = { 0, };
 	int n = 0;
+	int arr[105] = {0,};
+
+	
 	cin >> n;
 
 	for (int i = 0; i < n;i++) {
@@ -40,6 +53,22 @@ int main() {
 			pq.push(make_pair(-a,make_pair(i, j)));
 		}
 	}
+	for (int i = 0; i < n; i++) {
+		arr[i] = i;
+	}
+	int m = 1;
+	float answer = -pq.top().first;
+	arr[pq.top().second.second] = pq.top().second.first;
+	pq.pop();
+	while (m<n-1) {
+		int w = -pq.top().first; int i = pq.top().second.first; int j = pq.top().second.second; pq.pop();
+		if (find(arr,i)!=find(arr,j)) {
+			answer += w;
+			uni(arr, n, i, j);
+			m++;
+		}
+	}
+	cout << answer;
 
 
 	return 0;
