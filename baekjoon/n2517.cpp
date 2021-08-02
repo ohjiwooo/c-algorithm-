@@ -2,30 +2,23 @@
 
 
 using namespace std;
+typedef long long ll;
 
-int n = 0;
-long long arr[500002];
-int answer[500002];
+
+int arr[500005];
 
 int main() {
 
-	
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n; //¼±¼ö (3~500000)
 	cin >> n;
 
 	for (int i = 1; i <= n;i++) {
 		cin >> arr[i];
 	}
-	for (int i = 1; i <= n;i++) {
 
-		for
-
-	}
-
-	
-
-	for (int i = 1; i <= n; i++) {
-		cout << answer[i] << "\n";
-	}
 
 	return 0;
 }

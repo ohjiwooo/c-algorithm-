@@ -7,7 +7,6 @@ using namespace std;
 
 typedef struct ss {
 
-
 	string s = "";
 	int n = 0;
 };

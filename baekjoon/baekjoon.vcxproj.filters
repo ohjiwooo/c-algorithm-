@@ -288,9 +288,6 @@
     <ClCompile Include="n2805.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="n2748.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="n2517.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -421,6 +418,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="n10714.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n2003_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n2805_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n1806_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n2096_2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
