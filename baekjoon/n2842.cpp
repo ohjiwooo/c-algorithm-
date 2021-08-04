@@ -3,6 +3,7 @@
 #include<vector>
 #include<cstring>
 #include<string>
+#include<queue>
 using namespace std;
 
 char map[55][55];
@@ -15,7 +16,7 @@ int dx[8] = { -1,0,1,1,1,0,-1,-1 };
 int n;
 bool vis[55][55];
 int num = 0;
-bool dfs(int nowi, int nowj,int minn,int maxx,int visit) {
+/*bool dfs(int nowi, int nowj,int minn,int maxx,int visit) {
 
 	
 	if (map2[nowi][nowj] < minn || map2[nowi][nowj] > maxx)return false;
@@ -32,6 +33,31 @@ bool dfs(int nowi, int nowj,int minn,int maxx,int visit) {
 	}
 	return false ;
 
+}*/
+
+bool bfs(int nowi,int nowj,int minn,int maxx) {
+
+	if (map2[nowi][nowj] < minn || map2[nowi][nowj] > maxx)return false;
+	queue <pair<int,int>>q;
+	q.push(make_pair(nowi, nowj));
+	int tmp_answer = 0;
+
+	while (q.empty()!=true) {
+	
+		int ni = q.front().first; int nj = q.front().second; vis[ni][nj] = true; q.pop();
+		if (map[ni][nj] == 'K')tmp_answer++;
+		if (tmp_answer == num)return true;
+		for (int i = 0; i < 8; i++) {
+			int newi = ni + dy[i]; int newj = nj + dx[i];
+
+			if (newi >= 0 && newi < n && newj >= 0 && newj < n && map2[newi][newj] >= minn && map2[newi][newj] <= maxx && vis[newi][newj] == false) { //범위안에있음
+				q.push(make_pair(newi, newj));
+				vis[newi][newj] = true;
+			}
+		}
+	}
+
+	return false;
 }
 
 int main() {
@@ -66,8 +92,7 @@ int main() {
 	while (s <v.size() && e<v.size()) {
 		
 		memset(vis, false, sizeof(vis));
-		vis[nowi][nowj] = true;
-		if (dfs(nowi,nowj,v[s],v[e],0)==true) {
+		if (bfs(nowi,nowj,v[s],v[e])==true) {
 			answer = min(answer, v[e] - v[s]);
 			s++;
 		}

@@ -333,9 +333,6 @@
     <ClCompile Include="n14476.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="n9202.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="n2960.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -439,6 +436,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="n2842.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n11003.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n9202.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n2094.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n2042_2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
