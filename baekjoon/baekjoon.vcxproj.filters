@@ -471,5 +471,14 @@
     <ClCompile Include="n1722.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="n1717-2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n2252_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n1922_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
