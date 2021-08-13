@@ -375,16 +375,10 @@
     <ClCompile Include="n3176.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="n1753_re.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="n11400-단절선.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="n11404.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="n11657-re.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="n1932.cpp">
@@ -478,6 +472,33 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="n1922_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n11438_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n1753_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n1753_3.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n11404_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n3860.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n11657_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n11657_3.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n1516_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n3176_2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
