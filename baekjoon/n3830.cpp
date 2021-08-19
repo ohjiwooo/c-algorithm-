@@ -2,9 +2,12 @@
 #include<vector>
 
 using namespace std;
-
+typedef long long ll;
 int p[100005];
-int dist[100005];
+ll dist[100005];
+int n, m, a, b, w;
+char q;
+
 
 void init(int n) {
 
@@ -24,27 +27,22 @@ int find(int a) {
 		return a;
 	}
 	else {
-		
-		return p[a] = find(p[a]);
+		int tmp = find(p[a]);
+		dist[a] += dist[p[a]];
+		return p[a] = tmp;
 	}
 }
+
 
 void uni(int a, int b,int w) { //b가 a보다 w만큼 무거움
 
 	int a_p = find(a);
 	int b_p = find(b);
 
+	if (a_p == b_p)return;
+	dist[a_p] = ((w + dist[b])-dist[a]);//부모의 값만 수정하면 나머지는 find시 수정됨
+	p[a_p] = b_p;
 	
-	
-	if (a_p != a) {
-		dist[a_p] += w;
-		dist[a] += w;
-	}
-	else {	
-		dist[a_p] += w;
-	}
-	p[b_p] = a_p;
-
 
 }
 
@@ -52,8 +50,7 @@ int main() {
 
 	ios::sync_with_stdio(0);
 	cin.tie(0);
-	int n, m,a,b,w;
-	char q;
+	
 	cin >> n >> m;
 
 	
@@ -75,7 +72,7 @@ int main() {
 
 				}
 				else {
-					cout << "답 : "<<dist[a] - dist[b] << "\n";
+					cout <<dist[a] - dist[b] << "\n";
 				}
 			}
 		}
