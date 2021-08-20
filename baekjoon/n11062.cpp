@@ -4,7 +4,7 @@
 typedef long long ll;
 using namespace std;
 
-ll dp[1001][1001][2];
+ll dp[1001][1001];
 int arr[1005];
 
 ll dp_func(int s, int e,int turn) { //시작점, 끝점, 누구의 턴인지 -0:근우
@@ -14,7 +14,7 @@ ll dp_func(int s, int e,int turn) { //시작점, 끝점, 누구의 턴인지 -0:근우
 		else { return 0; }//근우차례가 아니면 선택하지 않으므로 return 0
 	}
 
-	ll &answer = dp[s][e][turn];
+	ll &answer = dp[s][e];
 	if (answer != -1)return answer; //이미구함
 
 	if (turn == 0) { //지금이 근우 차례라면
