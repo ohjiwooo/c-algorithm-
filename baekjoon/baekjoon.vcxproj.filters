@@ -525,5 +525,11 @@
     <ClCompile Include="n10714_2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="n10282.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="n1238.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
